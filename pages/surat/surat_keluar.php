@@ -51,9 +51,7 @@ exit;
     <link href="../../css/themes/all-themes.css" rel="stylesheet" />
     <!-- Memasukan config untuk database PHP -->
     
-    <!-- Jquery Core Js -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
-    <script src="../../js/pages/tables/jquery-datatable.js"></script>
+
 
     <?php 
     include '../../php/config.php';
@@ -513,7 +511,7 @@ exit;
             </div>            
         <!-- #END# Select -->
         <!-- Exportable Table -->
-            <div class="row clearfix" id="tabelupdate">
+            <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
@@ -522,7 +520,7 @@ exit;
                             </h2>
                         </div>
                         <div class="body">
-                            <div class="table-responsive">
+                            <div class="table-responsive" id="tabelupdate">
                                 <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                                     <thead>
                                         <tr>
@@ -588,29 +586,33 @@ exit;
                     </div>
                 </div>
             </div>
+
+    <!-- Jquery Core Js -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="../../js/pages/tables/jquery-datatable.js"></script>
     
-        <script type="text/javascript">
+    <script type="text/javascript">
 
-            $(document).ready(function(){
-                $("#simpan").click(function(){
-                var data = $('#form_input').serialize();
-                $.ajax({
-                type: 'POST',
-                url: "../../php/proses.php",
-                data: data,
-                success: function() {
+        $(document).ready(function(){
+            $("#simpan").click(function(){
+            var data = $('#form_input').serialize();
+            $.ajax({
+            type: 'POST',
+            url: "../../php/proses.php",
+            data: data,
+            success: function() {
 
-                $('#tabelupdate').load("../../php/tabelupdate.php"); 
-                $('.modal-body').load("../../php/shownomor.php");
+            $('#tabelupdate').load("../../php/tabelupdate.php"); 
+            $('.modal-body').load("../../php/shownomor.php");
 
-                }
-            });
+            }
+        });
 
-            });
+        });
 
-            });
+        });
 
-        </script>
+    </script>
 
     <!-- Bootstrap Core Js -->
     <script src="../../plugins/bootstrap/js/bootstrap.js"></script>

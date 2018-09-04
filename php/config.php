@@ -1,7 +1,7 @@
 <?php
 $local = "localhost";
-$user	= "root";
-$pass	= "";
+$user	= "lucky";
+$pass	= "111333";
 $db		= "eoffice";
 
 $koneksi = mysqli_connect($local,$user,$pass,$db);

@@ -1,15 +1,7 @@
 <?php
 include 'function.php';
 ?>
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="tabelupdate">
-                    <div class="card">
-                        <div class="header">
-                            <h2>
-                                ANJING REGISTER SURAT KELUAR
-                            </h2>
-                        </div>
-                        <div class="body">
-                            <div class="table-responsive">
+<div class="table-responsive" id="tabelupdate">
                                 <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                                     <thead>
                                         <tr>
@@ -31,10 +23,9 @@ include 'function.php';
                                             <th>Prefix Surat</th>
                                         </tr>
                                     </tfoot>
-                                   
                                     <tbody>
                                         <?php
-                                        $query = mysqli_query($koneksi,"SELECT * FROM surat_keluar JOIN nama_unit USING(kd_unit) ORDER BY no_surat DESC"); 
+                                        $query = mysqli_query($koneksi,"SELECT * FROM surat_keluar JOIN nama_unit USING(kd_unit) ORDER BY no_surat ASC"); 
                                         while ($data = mysqli_fetch_array($query)) {
                                         ?>
                                         <tr>
@@ -50,10 +41,7 @@ include 'function.php';
                                         ?>
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+</div>
 
                  <!-- Jquery DataTable Plugin Js -->
 
