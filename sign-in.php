@@ -17,10 +17,9 @@ if( isset($_POST['login'])){
     //cek username
     if(mysqli_num_rows($result) === 1){
         //cek status
-        if( $row['status'] == false){ 
-
-            if(password_verify($password, $row['password'])) {
-            
+        if(password_verify($password, $row['password'])) {
+        
+            if( $row['status'] == false){ 
             // set session
             $_SESSION['login'] = true;
             $_SESSION['username'] = $username;
@@ -30,9 +29,9 @@ if( isset($_POST['login'])){
             header("Location: index.php");
             exit;
 
-            }else{$error = true;}
+            }else{$errorstatus = true;}
          
-        }else{$errorstatus = true;}
+        }else{$error = true;}
         //cek password        
     }else{$error = true;}
     }

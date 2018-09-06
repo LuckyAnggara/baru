@@ -13,6 +13,7 @@
         $data = mysqli_fetch_array($query);
         $jmlhdata = $data[0];
         $no = $jmlhdata+1;
+        
 
         $output = "GRT/".$unit."/".$no."/".date('Y',strtotime($date));
 

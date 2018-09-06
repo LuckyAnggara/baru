@@ -530,6 +530,7 @@ exit;
                                             <th>Pengirim</th>
                                             <th>Perihal</th>
                                             <th>Prefix Surat</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -540,11 +541,12 @@ exit;
                                             <th>Pengirim</th>
                                             <th>Perihal</th>
                                             <th>Prefix Surat</th>
+                                            <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <?php
-                                        $query = mysqli_query($koneksi,"SELECT * FROM surat_keluar JOIN nama_unit USING(kd_unit) ORDER BY no_surat DESC"); 
+                                        $query = mysqli_query($koneksi,"SELECT * FROM surat_keluar JOIN nama_unit USING(kd_unit) ORDER BY no_surat ASC"); 
                                         while ($data = mysqli_fetch_array($query)) {
                                         ?>
                                         <tr>
@@ -553,7 +555,34 @@ exit;
                                             <td><?php echo $data['tujuan'];?></td>  
                                             <td><?php echo $data['nama'];?></td>  
                                             <td><?php echo $data['hal'];?></td> 
-                                            <td><?php echo $data['output'];?></td> 
+                                            <td><?php echo $data['output'];?></td>
+                                            
+                                            <?php
+
+                                            if($data['lampiran']){
+                                            ?>
+
+                                            <td>
+                                                <a href="../../surat_keluar.php?id=<?php echo $data['no_surat'];?>" data-toggle="modal" data-target="#largeModal" name="show">
+                                                <i class="material-icons">remove_red_eye</i>
+                                                </a>
+                                                <a href="#" data-toggle="modal" data-target="#largeModal">
+                                                <i class="material-icons">file_upload</i>
+                                                </a>
+                                            </td>
+
+                                            <?php
+                                            }else{
+                                            ?>
+                                            <td><a href="#" data-toggle="modal" data-target="#largeModal" name="show">
+                                                <i class="material-icons">remove_red_eye</i>
+                                                </a>
+                                                <i class="material-icons">file_upload</i>
+                                            </td>
+                                            <?php
+                                            }
+                                            ?>
+
                                         </tr>
                                         <?php
                                         }
@@ -568,6 +597,7 @@ exit;
             <!-- #END# Exportable Table -->    
         </div>
     </section>
+
      <!-- For Material Design Colors -->
             <div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
@@ -582,6 +612,36 @@ exit;
 
                         <div class="modal-footer">
                             <button type="button" id="update" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+           <div class="modal fade" id="largeModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="largeModalLabel">Scanned Document</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <?php 
+                            $search = $_GET['id'];
+                            echo $search;
+                            // $query = mysqli_query($koneksi,"SELECT * FROM surat_keluar where no_surat = '$search'");
+                            // $data = mysqli_fetch_array($query);
+
+                           
+                            
+                            ?>
+
+                          
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
                         </div>
                     </div>
                 </div>
