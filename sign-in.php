@@ -135,10 +135,10 @@ if( isset($_POST['login'])){
     <script src="plugins/bootstrap/js/bootstrap.js"></script>
 
     <!-- Select Plugin Js -->
-    <script src=".plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="plugins/bootstrap-select/js/bootstrap-select.js"></script>
 
     <!-- Waves Effect Plugin Js -->
-    <script src=".plugins/node-waves/waves.js"></script>
+    <script src="plugins/node-waves/waves.js"></script>
 
     <!-- Validation Plugin Js -->
     <script src="plugins/jquery-validation/jquery.validate.js"></script>

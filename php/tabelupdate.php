@@ -25,7 +25,7 @@ include 'function.php';
                                     </tfoot>
                                     <tbody>
                                         <?php
-                                        $query = mysqli_query($koneksi,"SELECT * FROM surat_keluar JOIN nama_unit USING(kd_unit) ORDER BY no_surat ASC"); 
+                                        $query = mysqli_query($koneksi,"SELECT * FROM surat_keluar JOIN nama_unit USING(kd_unit)"); 
                                         while ($data = mysqli_fetch_array($query)) {
                                         ?>
                                         <tr>
@@ -35,6 +35,32 @@ include 'function.php';
                                             <td><?php echo $data['nama'];?></td>  
                                             <td><?php echo $data['hal'];?></td> 
                                             <td><?php echo $data['output'];?></td> 
+                                        <?php
+
+                                            if($data['lampiran']){
+                                            ?>
+
+                                            <td>
+                                                <a name="<?php echo $data['no_surat'];?>" data-toggle="modal" data-target="#largeModal" name="show">
+                                                <i class="material-icons">remove_red_eye</i>
+                                                </a>
+                                                <a href="#" data-toggle="modal" data-target="#largeModal">
+                                                <i class="material-icons">file_upload</i>
+                                                </a>
+                                            </td>
+
+                                            <?php
+                                            }else{
+                                            ?>
+                                            <td><a href="../../surat_keluar.php?id=<?php echo $data['no_surat'];?>" data-toggle="modal" data-target="#largeModal" name="show">
+                                                <i class="material-icons">remove_red_eye</i>
+                                                </a>
+                                                <i class="material-icons">file_upload</i>
+                                            </td>
+                                            <?php
+                                            }
+                                            ?>
+
                                         </tr>
                                         <?php
                                         }
@@ -44,5 +70,22 @@ include 'function.php';
 </div>
 
                  <!-- Jquery DataTable Plugin Js -->
+<script>
 
-    <script src="../../js/pages/tables/jquery-datatable.js"></script>
+ $(function () {
+            $('.js-basic-example').DataTable({
+                responsive: true
+            });
+
+            //Exportable table
+            $('.js-exportable').DataTable({
+                "order": [[ 0, "desc" ]],
+                dom: 'Bfrtip',
+                responsive: true,
+                buttons: [
+                    'copy', 'excel',  'pdf', 'print'
+                ]
+
+            });
+        });
+    </script>

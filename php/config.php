@@ -4,7 +4,8 @@ $user	= "lucky";
 $pass	= "111333";
 $db		= "bni_eoffice";
 
-$folder = "../source/";
+$timeout = 10; // timout login dalam menit
+
 
 $koneksi = mysqli_connect($local,$user,$pass,$db);
 if (mysqli_connect_errno()){

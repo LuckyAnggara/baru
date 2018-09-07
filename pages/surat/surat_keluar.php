@@ -1,10 +1,28 @@
 <?php
-
 session_start();
+require '../../php/function.php';
 if( !isset($_SESSION['login']) ){
 header("Location: sign-in.php");
 exit;
 }
+
+
+$timeout = $timeout * 60;
+$logout_redirect_url = "../../sign-in.php";
+
+if ( isset($_SESSION['start_time']) ) {
+    $elapsed_time = time() - $_SESSION['start_time'];
+    if ($elapsed_time >= $timeout) {
+
+        $username = $_SESSION['username'];
+        $result = mysqli_query($koneksi, "UPDATE users SET status ='0' WHERE username = '$username'");
+        $_SESSION = [];
+        session_unset();
+        session_destroy();
+        echo "<script>alert('Waktu Anda Telah Habis');window.location = '$logout_redirect_url'</script>";
+    }
+}
+$_SESSION['start_time'] = time();
 
 ?>
 
@@ -41,8 +59,10 @@ exit;
     <!-- Bootstrap Select Css -->
     <link href="../../plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
-        <!-- Sweetalert Css -->
+    <!-- Sweetalert Css -->
     <link href="../../plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+    <!-- JQuery DataTable Css -->
+    <link href="../../plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 
     <!-- Custom Css -->
     <link href="../../css/style.css" rel="stylesheet">
@@ -50,6 +70,7 @@ exit;
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="../../css/themes/all-themes.css" rel="stylesheet" />
     <!-- Memasukan config untuk database PHP -->
+
     
 
 
@@ -550,38 +571,18 @@ exit;
                                         while ($data = mysqli_fetch_array($query)) {
                                         ?>
                                         <tr>
-                                            <td><?php echo $data['no_surat'];?></td> 
+                                            <td id="no_surat"><?php echo $data['no_surat'];?></td> 
                                             <td><?php echo $data['tanggal'];?></td>  
                                             <td><?php echo $data['tujuan'];?></td>  
                                             <td><?php echo $data['nama'];?></td>  
                                             <td><?php echo $data['hal'];?></td> 
                                             <td><?php echo $data['output'];?></td>
-                                            
-                                            <?php
-
-                                            if($data['lampiran']){
-                                            ?>
-
                                             <td>
-                                                <a href="../../surat_keluar.php?id=<?php echo $data['no_surat'];?>" data-toggle="modal" data-target="#largeModal" name="show">
-                                                <i class="material-icons">remove_red_eye</i>
-                                                </a>
-                                                <a href="#" data-toggle="modal" data-target="#largeModal">
-                                                <i class="material-icons">file_upload</i>
-                                                </a>
+                                            <a onclick ="jien(<?php echo $data['no_surat'];?>)" class="btn bg-purple waves-effect" data-toggle="modal" data-target="#largeModal">
+                                                <i class="material-icons">search</i>
+                                            </a>
                                             </td>
 
-                                            <?php
-                                            }else{
-                                            ?>
-                                            <td><a href="#" data-toggle="modal" data-target="#largeModal" name="show">
-                                                <i class="material-icons">remove_red_eye</i>
-                                                </a>
-                                                <i class="material-icons">file_upload</i>
-                                            </td>
-                                            <?php
-                                            }
-                                            ?>
 
                                         </tr>
                                         <?php
@@ -625,20 +626,10 @@ exit;
                         <div class="modal-header">
                             <h4 class="modal-title" id="largeModalLabel">Scanned Document</h4>
                         </div>
-                        <div class="modal-body">
-
-                            <?php 
-                            $search = $_GET['id'];
-                            echo $search;
-                            // $query = mysqli_query($koneksi,"SELECT * FROM surat_keluar where no_surat = '$search'");
-                            // $data = mysqli_fetch_array($query);
-
-                           
-                            
-                            ?>
-
-                          
-
+                        <div class="modal-body-2">                   
+                                  
+                        
+                                              
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
@@ -649,7 +640,7 @@ exit;
 
     <!-- Jquery Core Js -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
-    <script src="../../js/pages/tables/jquery-datatable.js"></script>
+    
     
     <script type="text/javascript">
 
@@ -667,12 +658,31 @@ exit;
 
             }
         });
-
+        });
+           
         });
 
-        });
+        function jien(no){
+            $.ajax({
+            type: 'POST',
+            url: "../../php/showsurat.php",
+            data: 'no='+no,
+            success: function() {
+                console.log(no);
+                $('.modal-body-2').load("../../php/show.php");
+            }
+            });
+
+        };
+
+
+        
+
+        
 
     </script>
+    
+    
 
     <!-- Bootstrap Core Js -->
     <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
@@ -718,15 +728,39 @@ exit;
     <script src="../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
     <script src="../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 
+
+
     <!-- Custom Js -->
     <script src="../../js/admin.js"></script>
     <script src="../../js/pages/forms/basic-form-elements.js"></script>
     <script src="../../js/pages/ui/modals.js"></script>
     <script src="../../js/pages/forms/form-validation.js"></script>
     <script src="../../js/pages/ui/dialogs.js"></script>
+    <script>
+
+ $(function () {
+            $('.js-basic-example').DataTable({
+                responsive: true
+            });
+
+            //Exportable table
+            $('.js-exportable').DataTable({
+                "order": [[ 0, "desc" ]],
+                dom: 'Bfrtip',
+                responsive: true,
+                buttons: [
+                    'copy', 'excel',  'pdf', 'print'
+                ]
+
+            });
+        });
+    </script>
+    
 
     <!-- Demo Js -->
     <script src="../../js/demo.js"></script>
+
+    
 </body>
 
 </html>

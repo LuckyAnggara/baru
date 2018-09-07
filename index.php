@@ -1,9 +1,31 @@
 ﻿<?php
 session_start();
+require 'php/function.php';
 if( !isset($_SESSION['login']) ){
 header("Location: sign-in.php");
 exit;
 }
+
+
+$logout_redirect_url = "sign-in.php";
+
+$timeout = $timeout * 60;
+
+if ( isset($_SESSION['start_time']) ) {
+    $elapsed_time = time() - $_SESSION['start_time'];
+    if ($elapsed_time >= $timeout) {
+
+        $username = $_SESSION['username'];
+        $result = mysqli_query($koneksi, "UPDATE users SET status ='0' WHERE username = '$username'");
+        $_SESSION = [];
+
+        session_unset();
+        session_destroy();
+        echo "<script>alert('Waktu Anda Telah Habis');window.location = '$logout_redirect_url'</script>";
+    }
+}
+$_SESSION['start_time'] = time();
+
 ?>
 
 
@@ -805,28 +827,12 @@ exit;
     <script src="plugins/node-waves/waves.js"></script>
 
     <!-- Jquery CountTo Plugin Js -->
-    <script src="plugins/jquery-countto/jquery.countTo.js"></script>
+<!--     <script src="plugins/jquery-countto/jquery.countTo.js"></script> -->
 
-    <!-- Morris Plugin Js -->
-    <script src="plugins/raphael/raphael.min.js"></script>
-    <script src="plugins/morrisjs/morris.js"></script>
-
-    <!-- ChartJs -->
-    <script src="plugins/chartjs/Chart.bundle.js"></script>
-
-    <!-- Flot Charts Plugin Js -->
-    <script src="plugins/flot-charts/jquery.flot.js"></script>
-    <script src="plugins/flot-charts/jquery.flot.resize.js"></script>
-    <script src="plugins/flot-charts/jquery.flot.pie.js"></script>
-    <script src="plugins/flot-charts/jquery.flot.categories.js"></script>
-    <script src="plugins/flot-charts/jquery.flot.time.js"></script>
-
-    <!-- Sparkline Chart Plugin Js -->
-    <script src="plugins/jquery-sparkline/jquery.sparkline.js"></script>
 
     <!-- Custom Js -->
     <script src="js/admin.js"></script>
-    <script src="js/pages/index.js"></script>
+<!--     <script src="js/pages/index.js"></script> -->
 
     <!-- Demo Js -->
     <script src="js/demo.js"></script>
