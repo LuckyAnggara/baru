@@ -44,7 +44,7 @@ function showWithTitleMessage() {
 }
 
 function showSuccessMessage() {
-    swal("Good job!", "You clicked the button!", "success");
+    swal("Good job!", "Data Telah Tersimpan!", "success");
 }
 
 function showConfirmMessage() {

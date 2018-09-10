@@ -400,7 +400,7 @@ $_SESSION['start_time'] = time();
                                     </li>
                                     <li>
                                         <a href="#">
-                                        lain - lain
+                                        Lain - lain
                                         </a>
                                     </li>
                                 </ul>
@@ -446,8 +446,8 @@ $_SESSION['start_time'] = time();
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
-                                        lain - lain
+                                        <a href="pages/lain lain/resume-instansi.php">
+                                        Resume
                                         </a>
                                     </li>
                                 </ul>
