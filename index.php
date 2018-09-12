@@ -699,7 +699,7 @@ $_SESSION['start_time'] = time();
                                     <div class="media-body">
                                         <div class="form-group">
                                         <div class="form-line">
-                                        <textarea rows="1" name="post" class="form-control no-resize auto-growth" placeholder="Apa yang anda pikirkan? Posting Sekarang"></textarea>
+                                        <textarea rows="3" name="post" id="post_text" class="form-control no-resize" placeholder="Apa yang anda pikirkan? Posting Sekarang"></textarea>
                                         </div>
                                         </div>
                                     </div>
@@ -709,29 +709,6 @@ $_SESSION['start_time'] = time();
                                 </div>
                             </form>
                         </div>
-                        <!-- <div class="body">
-                            <div class="form-group">
-                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 media-left">
-                                <a href="javascript:void(0);">
-                                    <img class="media-object" src="images/user.jpg" width="86" height="86" alt="User">
-                                </a>
-                            </div>
-                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                            <div class="media-body">
-                                <div class="form-line">
-                                    <textarea rows="3" class="form-control no-resize" placeholder="Apa yang anda pikirkan?"></textarea>
-                                </div>
-                            </div>
-                            </div>
-                            </div>
-                            
-                            <div class="row clearfix">
-                                    <div class="col-lg-offset-11 col-md-offset-11 col-sm-offset-11 col-xs-offset-9">
-                                        <button type="button" class="btn btn-primary m-t-15 waves-effect">POST</button>
-                                    </div>
-                            </div>
-
-                        </div> -->
                     </div>                     
                 </div>
                 <!-- AKHIR STATUS -->
@@ -741,11 +718,11 @@ $_SESSION['start_time'] = time();
                 $query = mysqli_query($koneksi,"SELECT * FROM postfeed JOIN users USING(username) ORDER BY no DESC LIMIT 5");
                 ?>
                 <!-- Default Media -->
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
+                <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                    <div class="card" id="postingfeed">
                         <div class="header">
                             <h2>
-                                STATUS FEEDS
+                                NEWS FEEDS
                             </h2>
                             <ul class="header-dropdown m-r--5">
                                 <li>
@@ -755,30 +732,56 @@ $_SESSION['start_time'] = time();
                                 </li>
                             </ul>
                         </div>
-                        <div class="body" id="postingfeed">
-                            <?php while ($data = mysqli_fetch_array($query)) { ?>
-                                <div class="card">
-                                    <div class="body">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <a href="javascript:void(0);">
-                                                <img class="media-object" src="images/profile/<?php echo $data['username'];?>.png" width="64" height="64">
-                                            </a>
+                            <div class="body" >
+                                <?php while ($data = mysqli_fetch_array($query)) { 
+                                    $nofeed = $data['no'];
+                                    $query_comment = mysqli_query($koneksi,"SELECT * FROM comment_feed JOIN users USING(username) WHERE no_feed = '".$nofeed."' ORDER BY no DESC LIMIT 5 ");
+                                    $count = mysqli_query($koneksi,"SELECT count(no) FROM comment_feed where no_feed = '".$nofeed."'"); // itung jumlah komen
+                                    $count_comment = mysqli_fetch_array($count);
+                                    ?>
+                                    <div class="card">
+                                        <div class="body">
+                                        <div class="media">
+                                            <div class="media-left">
+                                                    <img class="media-object" src="images/profile/<?php echo $data['username'];?>.png" width="64" height="64">
+                                            </div>
+                                            <div class="media-body">
+                                                <h1 class="media-heading"><?php echo $data['nama'];?></h1>
+                                                <?php echo $data['text'];?>
+                                            </div>
+
                                         </div>
-                                        <div class="media-body">
-                                            <h1 class="media-heading"><?php echo $data['nama'];?></h1>
-                                            <?php echo $data['text'];?>
+
+                                        <a class="m-r-30" data-toggle="collapse" href="#<?php echo $nofeed;?>" aria-expanded="true" aria-controls="<?php echo $nofeed;?>">
+                                            Comment <span class="badge"><?php echo $count_comment[0]; ?></span>
+                                        </a>
+                                            <div class="collapse" id="<?php echo $nofeed;?>">
+                                                <div class="well">
+                                                    <?php while ($data_comment = mysqli_fetch_array($query_comment)) { ?>
+                                                    <div class="media-body">
+                                                    <div class="media-heading font-14 font-bold"><?php echo $data_comment['nama'];?></div>
+                                                        <div class="font-10"><?php echo $data_comment['text'];?></div>
+                                                    </div>
+                                                </br>
+                                                    <?php } ?>
+                                                    <div class="form-line">
+                                                    <form id ="post_comment">
+                                                    <input type="text" id="comment" class="form-control" placeholder="Isi Komentarmu">
+                                                    </form>
+                                                    </div>  
+                                                </div>
+                                            </div>
+
+
                                         </div>
                                     </div>
-                                </div>
-                                </div>
-                            <?php } ?>
-                        </div>
+                                <?php } ?>
+                            </div>
                     </div>
                 </div>
                 <!-- #END# Default Media -->
                 <!-- Image With Captions -->
-                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <div class="card">
                         <div class="header">
                             <h2>NEWS IMAGE FEED</h2>
@@ -794,44 +797,33 @@ $_SESSION['start_time'] = time();
                             </ul>
                         </div>
                         <div class="body">
-                            <div id="carousel-example-generic_2" class="carousel slide" data-ride="carousel">
+                            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                                 <!-- Indicators -->
                                 <ol class="carousel-indicators">
-                                    <li data-target="#carousel-example-generic_2" data-slide-to="0" class="active"></li>
-                                    <li data-target="#carousel-example-generic_2" data-slide-to="1"></li>
-                                    <li data-target="#carousel-example-generic_2" data-slide-to="2"></li>
-                                    <li data-target="#carousel-example-generic_2" data-slide-to="3"></li>
+                                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
                                 </ol>
+
                                 <!-- Wrapper for slides -->
                                 <div class="carousel-inner" role="listbox">
                                     <div class="item active">
-                                        <img src="images/image-gallery/1.jpg" />
-                                        <div class="carousel-caption">
-                                            <h3>Penyerahan Hewan Qurban</h3>
-                                            <p>Mantap!!</p>
-                                        </div>
+                                        <img src="images/image-gallery/11.jpg" />
                                     </div>
                                     <div class="item">
-                                        <img src="images/image-gallery/3.jpg" />
-                                        <div class="carousel-caption">
-                                            <h3>Third slide label</h3>
-                                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                                        </div>
+                                        <img src="images/image-gallery/12.jpg" />
                                     </div>
                                     <div class="item">
                                         <img src="images/image-gallery/19.jpg" />
-                                        <div class="carousel-caption">
-                                            <h3>Third slide label</h3>
-                                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                                        </div>
                                     </div>
                                 </div>
+
                                 <!-- Controls -->
-                                <a class="left carousel-control" href="#carousel-example-generic_2" role="button" data-slide="prev">
+                                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
                                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                                     <span class="sr-only">Previous</span>
                                 </a>
-                                <a class="right carousel-control" href="#carousel-example-generic_2" role="button" data-slide="next">
+                                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
                                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                                     <span class="sr-only">Next</span>
                                 </a>
@@ -840,9 +832,8 @@ $_SESSION['start_time'] = time();
                     </div>
                 </div>
                 <!-- #END# With Captions -->
-                <!--  -->
                 <!-- Latest Social Trends -->
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <div class="card">
                         <div class="body bg-cyan">
                             <div class="m-b--35 font-bold">NEWS INFO</div>
@@ -867,7 +858,7 @@ $_SESSION['start_time'] = time();
                 </div>
                 <!-- #END# Latest Social Trends -->
                 <!-- Answered Tickets -->
-                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <div class="card">
                         <div class="body bg-blue-grey">
                             <div class="font-bold m-b--35">ALL ABOUT PRODUCT</div>
@@ -889,6 +880,9 @@ $_SESSION['start_time'] = time();
                     </div>
                 </div>
                 <!-- #END# Answered Tickets -->
+                
+                <!--  -->
+                
             </div>
         </div>
     </section>

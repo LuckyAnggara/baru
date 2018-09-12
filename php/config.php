@@ -1,8 +1,8 @@
 <?php
 $local = "localhost";
-$user	= "lucky";
-$pass	= "111333";
-$db		= "bni_eoffice";
+$user	= "root";
+$pass	= "";
+$db		= "eoffice";
 
 $timeout = 10; // timout login dalam menit
 
