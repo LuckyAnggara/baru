@@ -512,23 +512,23 @@ $_SESSION['start_time'] = time();
                                 </div>
 
                             </div>
-            <!-- Textarea -->
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>RESUME</h2>
-                        </div>
-                        <div class="body">
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <textarea rows="1" id="resume" name="resume" class="form-control no-resize auto-growth" placeholder="Silahkan Isi Hasil Resume, untuk menambah Paragraf Baru tekan 'ENTER' :D" required></textarea>
+                                <!-- Textarea -->
+                                <div class="row clearfix">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="card">
+                                            <div class="header">
+                                                <h2>RESUME</h2>
+                                            </div>
+                                            <div class="body">
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <textarea rows="1" id="resume" name="resume" class="form-control no-resize auto-growth" placeholder="Silahkan Isi Hasil Resume, untuk menambah Paragraf Baru tekan 'ENTER' :D" required></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
                             <div class="row clearfix js-sweetalert">
                             <button type="button" id="simpan" data-type="success" class="btn bg-green btn-success waves ">
                                  <i class="material-icons">chat</i>
@@ -562,6 +562,7 @@ $_SESSION['start_time'] = time();
                                             <th>PIC</th>
                                             <th>No Hp</th>
                                             <th>Petugas</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -572,6 +573,7 @@ $_SESSION['start_time'] = time();
                                             <th>PIC</th>
                                             <th>No Hp</th>
                                             <th>Petugas</th>
+                                            <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -585,7 +587,12 @@ $_SESSION['start_time'] = time();
                                             <td><?php echo $data['nama_instansi'];?></td>  
                                             <td><?php echo $data['pic'];?></td>  
                                             <td><?php echo $data['no_hp'];?></td> 
-                                            <td><?php echo $data['username'];?></td>                                         
+                                            <td><?php echo $data['username'];?></td>  
+                                            <td>
+                                            <a onclick ="view(<?php echo $data['no'];?>)" class="btn bg-purple waves-effect" data-toggle="modal" data-target="#largeModal">
+                                            <i class="material-icons">search</i>
+                                            </a>
+                                            </td>                                       
                                         </tr>
                                         <?php
                                         }
@@ -601,6 +608,84 @@ $_SESSION['start_time'] = time();
             
         </div>
     </section>
+
+    <!-- Modal untuk menampilkan File -->
+            <div class="modal fade" id="largeModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            
+                        </div>
+                        <div class="modal-body-2">                   
+                                 <div class="header">
+                                    <h3>Resume Instansi</h3>
+                                </div>
+                                <div class="body">
+                                    <div class="row clearfix">
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                                <label for="nama_instansi">Nama Instansi</label>
+                                            </div>
+                                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="text" id="nama_instansi" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>                                
+                                    </div>
+                                    <div class="row clearfix">
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                                <label for="nohp">No Hp</label>
+                                            </div>
+                                            <div class="col-lg-4 col-md-3 col-sm-3 col-xs-6">
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="text" id="nohp" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                                <label for="nohp">No Hp</label>
+                                            </div>
+                                            <div class="col-lg-4 col-md-3 col-sm-3 col-xs-6">
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="text" id="nohp" class="form-control" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <!-- Textarea -->
+                                    <div class="row clearfix">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="card">
+                                                    <div class="header">
+                                                        <h2>RESUME</h2>
+                                                    </div>
+                                                    <div class="body">
+                                                        <div class="form-group">
+                                                            <div class="form-line">
+                                                                <textarea rows="20" id="resume" name="resume" class="form-control no-resize auto-growth" disabled>
+                                                                </textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>                       
+                                              
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn bg-purple waves-effect" data-dismiss="modal"><i class="material-icons">print</i>Print</button>
+                            <button type="button" class="btn bg-red waves-effect" data-dismiss="modal"><i class="material-icons">close</i>Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                                   
+    <!-- Akhir Modal -->
 
     <!-- Jquery Core Js -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
@@ -622,6 +707,19 @@ $_SESSION['start_time'] = time();
         });
            
     });
+
+    function view(no){
+        $.ajax({
+            type: 'POST',
+            url: "../../php/resume/prosesview.php",
+            data: 'noresume='+no,
+            success: function() {
+                console.log(no);
+                $('.modal-body-2').load("../../php/resume/updateview.php");
+            }
+        });
+
+    };
     </script>
     
     <!-- Bootstrap Core Js -->

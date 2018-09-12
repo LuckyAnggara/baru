@@ -578,7 +578,7 @@ $_SESSION['start_time'] = time();
                                             <td><?php echo $data['hal'];?></td> 
                                             <td><?php echo $data['output'];?></td>
                                             <td>
-                                            <a onclick ="jien(<?php echo $data['no_surat'];?>)" class="btn bg-purple waves-effect" data-toggle="modal" data-target="#largeModal">
+                                            <a onclick ="view(<?php echo $data['no_surat'];?>)" class="btn bg-purple waves-effect" data-toggle="modal" data-target="#largeModal">
                                                 <i class="material-icons">search</i>
                                             </a>
                                             </td>
@@ -662,7 +662,7 @@ $_SESSION['start_time'] = time();
            
         });
 
-        function jien(no){
+        function view(no){
             $.ajax({
             type: 'POST',
             url: "../../php/showsurat.php",

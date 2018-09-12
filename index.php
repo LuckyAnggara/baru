@@ -53,6 +53,9 @@ $_SESSION['start_time'] = time();
     <!-- Animation Css -->
     <link href="plugins/animate-css/animate.css" rel="stylesheet" />
 
+    <!-- Wait Me Css -->
+    <link href="plugins/waitme/waitMe.css" rel="stylesheet" />
+
     <!-- Morris Chart Css-->
     <link href="plugins/morrisjs/morris.css" rel="stylesheet" />
 
@@ -682,11 +685,103 @@ $_SESSION['start_time'] = time();
             </div>
             <!-- #END# Widgets -->
             <div class="row clearfix">
+                <!-- STATUS -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="body">
+                            <form id="posting">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="javascript:void(0);">
+                                            <img class="media-object" src="images/user.jpg" width="64" height="64">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="form-group">
+                                        <div class="form-line">
+                                        <textarea rows="1" name="post" class="form-control no-resize auto-growth" placeholder="Apa yang anda pikirkan? Posting Sekarang"></textarea>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-offset-11 col-md-offset-11 col-sm-offset-11 col-xs-offset-9">
+                                        <button type="button" id="post" class="btn btn-primary m-t-15 waves-effect">POST</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- <div class="body">
+                            <div class="form-group">
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 media-left">
+                                <a href="javascript:void(0);">
+                                    <img class="media-object" src="images/user.jpg" width="86" height="86" alt="User">
+                                </a>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                            <div class="media-body">
+                                <div class="form-line">
+                                    <textarea rows="3" class="form-control no-resize" placeholder="Apa yang anda pikirkan?"></textarea>
+                                </div>
+                            </div>
+                            </div>
+                            </div>
+                            
+                            <div class="row clearfix">
+                                    <div class="col-lg-offset-11 col-md-offset-11 col-sm-offset-11 col-xs-offset-9">
+                                        <button type="button" class="btn btn-primary m-t-15 waves-effect">POST</button>
+                                    </div>
+                            </div>
+
+                        </div> -->
+                    </div>                     
+                </div>
+                <!-- AKHIR STATUS -->
+
+                <!-- php feetching status update -->
+                <?php
+                $query = mysqli_query($koneksi,"SELECT * FROM postfeed JOIN users USING(username) ORDER BY no DESC LIMIT 5");
+                ?>
+                <!-- Default Media -->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>
+                                STATUS FEEDS
+                            </h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li>
+                                    <a href="javascript:void(0);" data-toggle="cardloading" id="refresh" data-loading-effect="pulse" data-loading-color="green">
+                                        <i class="material-icons">loop</i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body" id="postingfeed">
+                            <?php while ($data = mysqli_fetch_array($query)) { ?>
+                                <div class="card">
+                                    <div class="body">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <a href="javascript:void(0);">
+                                                <img class="media-object" src="images/profile/<?php echo $data['username'];?>.png" width="64" height="64">
+                                            </a>
+                                        </div>
+                                        <div class="media-body">
+                                            <h1 class="media-heading"><?php echo $data['nama'];?></h1>
+                                            <?php echo $data['text'];?>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Default Media -->
                 <!-- Image With Captions -->
                 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                     <div class="card">
                         <div class="header">
-                            <h2>NEWS FEED</h2>
+                            <h2>NEWS IMAGE FEED</h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -766,7 +861,6 @@ $_SESSION['start_time'] = time();
                                 </li>
                                 <li>Jangan Lupa 4DX</li>
                                 <li>Kenakan Pakian Yang Rapih</li>
-                                <li>#bootstraptemplate</li>
                             </ul>
                         </div>
                     </div>
@@ -775,7 +869,7 @@ $_SESSION['start_time'] = time();
                 <!-- Answered Tickets -->
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="card">
-                        <div class="body bg-teal">
+                        <div class="body bg-blue-grey">
                             <div class="font-bold m-b--35">ALL ABOUT PRODUCT</div>
                             <ul class="dashboard-stat-list">
                                 <li>
@@ -785,23 +879,11 @@ $_SESSION['start_time'] = time();
                                 <li>
                                     Debit Asian Games
                                     <span class="pull-right"><b>Gratis Admin</b></span>
-                                </li>
+                                </li>   
                                 <li>
-                                    LAST WEEK
-                                    <span class="pull-right"><b>90</b> <small>TICKETS</small></span>
-                                </li>
-                                <li>
-                                    LAST MONTH
-                                    <span class="pull-right"><b>342</b> <small>TICKETS</small></span>
-                                </li>
-                                <li>
-                                    LAST YEAR
-                                    <span class="pull-right"><b>4 225</b> <small>TICKETS</small></span>
-                                </li>
-                                <li>
-                                    ALL
-                                    <span class="pull-right"><b>8 752</b> <small>TICKETS</small></span>
-                                </li>
+                                    Debit Asian Games
+                                    <span class="pull-right"><b>Gratis Admin</b></span>
+                                </li>                              
                             </ul>
                         </div>
                     </div>
@@ -811,8 +893,12 @@ $_SESSION['start_time'] = time();
         </div>
     </section>
 
- <!-- Jquery Core Js -->
+    <!-- Jquery Core Js -->
     <script src="plugins/jquery/jquery.min.js"></script>
+
+    <!-- script proses posting ajax dan autoreload -->
+
+    <script src="php/posting/autoupdate.js"></script>
 
     <!-- Bootstrap Core Js -->
     <script src="plugins/bootstrap/js/bootstrap.js"></script>
@@ -826,13 +912,23 @@ $_SESSION['start_time'] = time();
     <!-- Waves Effect Plugin Js -->
     <script src="plugins/node-waves/waves.js"></script>
 
-    <!-- Jquery CountTo Plugin Js -->
-<!--     <script src="plugins/jquery-countto/jquery.countTo.js"></script> -->
+    <!-- Moment Plugin Js -->
+    <script src="plugins/momentjs/moment.js"></script>
+
+    <!-- Autosize Plugin Js -->
+    <script src="plugins/autosize/autosize.js"></script>
+
+    <!-- Wait Me Plugin Js -->
+    <script src="plugins/waitme/waitMe.js"></script>
+
+    <!-- Bootstrap Material Datetime Picker Plugin Js -->
+    <script src="plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 
 
     <!-- Custom Js -->
     <script src="js/admin.js"></script>
-<!--     <script src="js/pages/index.js"></script> -->
+    <script src="js/pages/cards/colored.js"></script>
+    <script src="js/pages/forms/basic-form-elements.js"></script>
 
     <!-- Demo Js -->
     <script src="js/demo.js"></script>
