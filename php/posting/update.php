@@ -1,8 +1,9 @@
-   <?php
+<?php
+    session_start();
     require '../function.php';
-    $query = mysqli_query($koneksi,"SELECT * FROM postfeed JOIN users USING(username) ORDER BY no DESC LIMIT 5");
-    ?>  
-<div class="card" id="postingfeed">
+    $query = mysqli_query($koneksi,"SELECT * FROM postfeed JOIN users USING(username) WHERE status_delete = '0' ORDER BY no DESC LIMIT 5")
+    ?>
+    <div class="card" id="postingfeed">
     <div class="header">
         <h2>
             NEWS FEEDS
@@ -29,6 +30,15 @@
                         <img class="media-object" src="images/profile/<?php echo $data['username'];?>.png" width="64" height="64">
                     </div>
                     <div class="media-body">
+                        <!-- Tombol Delete -->                       
+                        <?php if($data['username']==$_SESSION['username']){?>
+                        <div class ="js-sweetalert">
+                            <button href="javascript:void(0);" class="btn bg-red btn-circle waves-effect waves-circle waves-float pull-right" data-type="confirm" data-id="<?php echo $nofeed; ?>">
+                                <i class="material-icons">delete</i>
+                            </button>
+                        </div>
+                        <?php } ?>                                                
+                        <!-- Content -->
                         <h1 class="media-heading"><?php echo $data['nama'];?></h1>
                             <?php echo $data['text'];?>
                     </div>
@@ -46,7 +56,10 @@
                             </br>
                             <?php } ?>
                             <div class="form-line">
-                                <input type="text" class="form-control" placeholder="Isi Komentarmu">
+                                <form id ="post_comment">
+                                    <input type="text" id="comment" data-id="<?php echo $nofeed; ?>" class="form-control" placeholder="Isi Komentarmu">
+                                </form>
+
                             </div>  
                         </div>
                     </div>
@@ -55,3 +68,8 @@
             <?php } ?>
     </div>
 </div>
+
+<!-- SweetAlert Plugin Js -->
+    <script src="plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="php/posting/sweetalert.js"></script>
+    <script src="php/posting/comment.js"></script>

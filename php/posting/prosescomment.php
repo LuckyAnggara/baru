@@ -1,9 +1,9 @@
     <?php
     session_start();
     	include '../config.php';
-        $date = date("d-m-Y");
-        $text = $_POST['comment'];
-        $nofeed = 8;
+        $date =  date("Y/m/d H:i:s");
+        $text = $_POST['data'];
+        $nofeed = $_POST['id'];
         $username = $_SESSION['username'];
         $query = mysqli_query($koneksi,"SELECT count(no) FROM comment_feed"); 
         $data = mysqli_fetch_array($query);

@@ -59,6 +59,9 @@ $_SESSION['start_time'] = time();
     <!-- Morris Chart Css-->
     <link href="plugins/morrisjs/morris.css" rel="stylesheet" />
 
+    <!-- Sweetalert Css -->
+    <link href="plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+
     <!-- Custom Css -->
     <link href="css/style.css" rel="stylesheet">
 
@@ -95,7 +98,7 @@ $_SESSION['start_time'] = time();
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="index.php">BNI GARUT E-OFFICE SYSTEM</a>
+                <a class="navbar-brand" href="../2/">BNI GARUT E-OFFICE SYSTEM</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -529,7 +532,7 @@ $_SESSION['start_time'] = time();
                     &copy; 2018 <a href="javascript:void(0);">joyLASTnight</a>.
                 </div>
                 <div class="version">
-                    <b>Version: </b> 0.1
+                    <b>Version: </b> 1.1
                 </div>
             </div>
             <!-- #Footer -->
@@ -632,58 +635,11 @@ $_SESSION['start_time'] = time();
 
     <section class="content">
         <div class="container-fluid">
-            <div class="block-header">
+<!--             <div class="block-header">
                 <h2>DASHBOARD</h2>
-            </div>
+            </div> -->
 
-            <!-- Widgets -->
-            <div class="row clearfix">
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box bg-pink hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">playlist_add_check</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">NEW TASKS</div>
-                            <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box bg-cyan hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">help</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">NEW TICKETS</div>
-                            <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box bg-light-green hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">forum</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">NEW COMMENTS</div>
-                            <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box bg-orange hover-expand-effect">
-                        <div class="icon">
-                            <i class="material-icons">person_add</i>
-                        </div>
-                        <div class="content">
-                            <div class="text">NEW VISITORS</div>
-                            <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- #END# Widgets -->
+            
             <div class="row clearfix">
                 <!-- STATUS -->
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -693,19 +649,37 @@ $_SESSION['start_time'] = time();
                                 <div class="media">
                                     <div class="media-left">
                                         <a href="javascript:void(0);">
-                                            <img class="media-object" src="images/user.jpg" width="64" height="64">
+                                            <img class="media-object" src="images/user.jpg" width="96" height="96">
                                         </a>
                                     </div>
                                     <div class="media-body">
+
                                         <div class="form-group">
                                         <div class="form-line">
-                                        <textarea rows="3" name="post" id="post_text" class="form-control no-resize" placeholder="Apa yang anda pikirkan? Posting Sekarang"></textarea>
+                                        <textarea rows="4" name="post" id="post_text" class="form-control no-resize" placeholder="Apa yang anda pikirkan? Posting Sekarang"></textarea>
+
+                                        </div >
+
+                                        <div class="jsdemo-notification-button">
+                                         <button type="button" id="post" class="btn btn-primary m-t-15 waves-effect pull-right" data-placement-from="top" data-placement-align="right"
+                                            data-animate-enter="animated lightSpeedIn" data-animate-exit="animated lightSpeedOut"
+                                            data-color-name="bg-black">
+                                            POST
+                                        </button>
                                         </div>
+
+
+                                        <!-- <button type="button" id="post" class="btn btn-primary m-t-15 waves-effect pull-right" data-placement-from="top" data-placement-align="right"
+                                            data-animate-enter="animated lightSpeedIn" data-animate-exit="animated lightSpeedOut"
+                                            data-color-name="bg-black">POST</button> -->
                                         </div>
+
+                                       
+
                                     </div>
-                                    <div class="col-lg-offset-11 col-md-offset-11 col-sm-offset-11 col-xs-offset-9">
+                                    <!-- <div class="col-lg-offset-11 col-md-offset-11 col-sm-offset-11 col-xs-offset-9">
                                         <button type="button" id="post" class="btn btn-primary m-t-15 waves-effect">POST</button>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </form>
                         </div>
@@ -715,8 +689,9 @@ $_SESSION['start_time'] = time();
 
                 <!-- php feetching status update -->
                 <?php
-                $query = mysqli_query($koneksi,"SELECT * FROM postfeed JOIN users USING(username) ORDER BY no DESC LIMIT 5");
+                $query = mysqli_query($koneksi,"SELECT * FROM postfeed JOIN users USING(username) WHERE status_delete = '0' ORDER BY no DESC LIMIT 5");
                 ?>
+
                 <!-- Default Media -->
                 <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
                     <div class="card" id="postingfeed">
@@ -746,6 +721,22 @@ $_SESSION['start_time'] = time();
                                                     <img class="media-object" src="images/profile/<?php echo $data['username'];?>.png" width="64" height="64">
                                             </div>
                                             <div class="media-body">
+
+                                                <!-- Tombol Delete -->
+                                                
+                                                <?php if($data['username']==$_SESSION['username']){
+                                                    ?>
+                                                    <div class ="js-sweetalert">
+                                                    <button href="javascript:void(0);" class="btn bg-red btn-circle waves-effect waves-circle waves-float pull-right" data-type="confirm" data-id="<?php echo $nofeed; ?>">
+                                                    <i class="material-icons">delete</i>
+                                                    </button>
+                                                    </div>
+
+                                                <?php } ?>                                                
+
+                                                <!-- Content -->
+
+
                                                 <h1 class="media-heading"><?php echo $data['nama'];?></h1>
                                                 <?php echo $data['text'];?>
                                             </div>
@@ -766,7 +757,7 @@ $_SESSION['start_time'] = time();
                                                     <?php } ?>
                                                     <div class="form-line">
                                                     <form id ="post_comment">
-                                                    <input type="text" id="comment" class="form-control" placeholder="Isi Komentarmu">
+                                                    <input type="text" id="comment" data-id="<?php echo $nofeed; ?>" class="form-control" placeholder="Isi Komentarmu">
                                                     </form>
                                                     </div>  
                                                 </div>
@@ -777,6 +768,11 @@ $_SESSION['start_time'] = time();
                                     </div>
                                 <?php } ?>
                             </div>
+                            <div class="footer align-center">
+                            <a href="javascript:void(0);">
+                                Load More ... 
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <!-- #END# Default Media -->
@@ -880,19 +876,60 @@ $_SESSION['start_time'] = time();
                     </div>
                 </div>
                 <!-- #END# Answered Tickets -->
-                
-                <!--  -->
-                
             </div>
+            <!-- Widgets -->
+            <div class="row clearfix">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box bg-pink hover-expand-effect">
+                        <div class="icon">
+                            <i class="material-icons">playlist_add_check</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">NEW TASKS</div>
+                            <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box bg-cyan hover-expand-effect">
+                        <div class="icon">
+                            <i class="material-icons">help</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">NEW TICKETS</div>
+                            <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box bg-light-green hover-expand-effect">
+                        <div class="icon">
+                            <i class="material-icons">forum</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">NEW COMMENTS</div>
+                            <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box bg-orange hover-expand-effect">
+                        <div class="icon">
+                            <i class="material-icons">person_add</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">NEW VISITORS</div>
+                            <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Widgets -->
         </div>
     </section>
 
     <!-- Jquery Core Js -->
     <script src="plugins/jquery/jquery.min.js"></script>
-
-    <!-- script proses posting ajax dan autoreload -->
-
-    <script src="php/posting/autoupdate.js"></script>
 
     <!-- Bootstrap Core Js -->
     <script src="plugins/bootstrap/js/bootstrap.js"></script>
@@ -906,6 +943,9 @@ $_SESSION['start_time'] = time();
     <!-- Waves Effect Plugin Js -->
     <script src="plugins/node-waves/waves.js"></script>
 
+    <!-- Bootstrap Notify Plugin Js -->
+    <script src="plugins/bootstrap-notify/bootstrap-notify.js"></script>
+
     <!-- Moment Plugin Js -->
     <script src="plugins/momentjs/moment.js"></script>
 
@@ -915,6 +955,9 @@ $_SESSION['start_time'] = time();
     <!-- Wait Me Plugin Js -->
     <script src="plugins/waitme/waitMe.js"></script>
 
+    <!-- SweetAlert Plugin Js -->
+    <script src="plugins/sweetalert/sweetalert.min.js"></script>
+
     <!-- Bootstrap Material Datetime Picker Plugin Js -->
     <script src="plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 
@@ -923,6 +966,8 @@ $_SESSION['start_time'] = time();
     <script src="js/admin.js"></script>
     <script src="js/pages/cards/colored.js"></script>
     <script src="js/pages/forms/basic-form-elements.js"></script>
+    <script src="php/posting/sweetalert.js"></script>
+    <script src="php/posting/proses.js"></script>
 
     <!-- Demo Js -->
     <script src="js/demo.js"></script>

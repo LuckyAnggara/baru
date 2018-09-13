@@ -1,7 +1,7 @@
     <?php
     session_start();
     	include '../config.php';
-        $date = date("d-m-Y");
+        $date =  date("Y/m/d H:i:s");
         $text = $_POST['post'];
         $username = $_SESSION['username'];
         $query = mysqli_query($koneksi,"SELECT count(no) FROM postfeed"); 
