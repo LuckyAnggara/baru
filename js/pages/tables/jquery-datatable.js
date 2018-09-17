@@ -1,5 +1,6 @@
  $(function () {
             $('.js-basic-example').DataTable({
+                "order": [[ 0, "desc" ]],
                 responsive: true
             });
 

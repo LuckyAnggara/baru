@@ -1,29 +1,10 @@
 <?php
+
 session_start();
-require '../../php/function.php';
 if( !isset($_SESSION['login']) ){
 header("Location: sign-in.php");
 exit;
 }
-
-
-$timeout = $timeout * 60;
-$logout_redirect_url = "../../sign-in.php";
-
-if ( isset($_SESSION['start_time']) ) {
-    $elapsed_time = time() - $_SESSION['start_time'];
-    if ($elapsed_time >= $timeout) {
-
-        $username = $_SESSION['username'];
-        $result = mysqli_query($koneksi, "UPDATE users SET status ='0' WHERE username = '$username'");
-        $_SESSION = [];
-        session_unset();
-        session_destroy();
-        echo "<script>alert('Waktu Anda Telah Habis');window.location = '$logout_redirect_url'</script>";
-    }
-}
-$_SESSION['start_time'] = time();
-
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +14,7 @@ $_SESSION['start_time'] = time();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Surat Keluar | BNI Garut E-Office System</title>
+    <title>TASK | BNI Garut E-Office System</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -59,8 +40,9 @@ $_SESSION['start_time'] = time();
     <!-- Bootstrap Select Css -->
     <link href="../../plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
-    <!-- Sweetalert Css -->
+        <!-- Sweetalert Css -->
     <link href="../../plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+
     <!-- JQuery DataTable Css -->
     <link href="../../plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 
@@ -70,9 +52,6 @@ $_SESSION['start_time'] = time();
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="../../css/themes/all-themes.css" rel="stylesheet" />
     <!-- Memasukan config untuk database PHP -->
-
-    
-
 
     <?php 
     include '../../php/config.php';
@@ -95,7 +74,8 @@ $_SESSION['start_time'] = time();
                     </div>
                 </div>
             </div>
-            <p>Please wait...</p>
+            <p>Mohon Tunggu</p>
+            <p>Menuju Task Manager</p>
         </div>
     </div>
     <!-- #END# Page Loader -->
@@ -120,7 +100,7 @@ $_SESSION['start_time'] = time();
                     <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
                             <i class="material-icons">flag</i>
-                            <span class="label-count">9</span>
+                            <span class="label-count"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="header">TASKS</li>
@@ -140,17 +120,25 @@ $_SESSION['start_time'] = time();
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="../../images/user.jpg" width="48" height="48" alt="User" />
+                    <img src="../../images/profile/<?php echo $_SESSION['username'];?>.png" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Lucky Anggara</div>
-                    <div class="email">K055292</div>
+                   <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <?php echo $_SESSION['nama'];?>
+                    </div>
+                    <div class="email">
+                    <?php echo $_SESSION['username'];?>
+                    </div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
                             <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
+                            <li><a href="#"><i class="material-icons">assignment_turned_in</i>Add Tasks</a></li>
+                            <!-- <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
+                            <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li> -->
+                            <li role="separator" class="divider"></li>
+                            <li><a href="../../php/logout.php"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -166,18 +154,18 @@ $_SESSION['start_time'] = time();
                             <span>Home</span>
                         </a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">assignment</i>
                             <span>E-Register</span>
                         </a>
                         <ul class="ml-menu">
-                            <li class="active">
+                            <li>
                                 <a href="javascript:void(0);" class="menu-toggle">
                                     Surat
                                 </a>
                                 <ul class="ml-menu">
-                                    <li class="active">
+                                    <li>
                                         <a href="#">
                                         Surat Keluar
                                         </a>
@@ -465,129 +453,128 @@ $_SESSION['start_time'] = time();
 
     <section class="content">
         <div class="container-fluid">
-            <!-- SELECT UNIT -->
+            <!-- Horizontal Layout -->
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
                             <h2>
-                             FORM INPUT SURAT KELUAR
+                                Tambah Task To Do
                             </h2>
                         </div>
-                        <form method="POST" id="form_input">
-                        <div class="body">
+                        <form id="posting">
+                            <div class="body">
+
+                                <div class="row clearfix">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                        <label for="email_address_2">Title</label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" name="judul" id="judul" class="form-control" placeholder="Masukan Judul" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                        <label for="password_2">Description</label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <textarea name="deskripsi" id="deskripsi" cols="30" rows="5" class="form-control no-resize" placeholder="Lengkapi Deskripsi Pekerjaan yang akan dilakukan" required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix">
+                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                        <label for="tanggal">Deadline</label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" id="tanggal" name="tanggal" class="datepicker form-control" placeholder="Please choose a date...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row clearfix">
+                                   
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
+                                        <button type="button" id="simpan2" class="btn btn-primary m-t-15 waves-effect">TAMBAH DATA</button>
+                                    </div>
+                                </div>
                             
-                            <div class="row clearfix">
-                                <div class="col-sm-6">
-                                    <label for = "tujuan">TANGGAL</label>
-                                    <div class="form-group form-float">
-                                        <div class="form-line">
-                                            <input type="text" id ="tanggal" class="datepicker form-control" name="tanggal" placeholder="Tanggal Surat" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for = "tujuan">UNIT PENGIRIM</label>
-                                    <select class="form-control show-tick" id = "unit"  name="unit" required>
-                                        <option value="">-- Pilih Unit Mana --</option>
-                                        <?php                                        
-                                        $query = mysqli_query($koneksi,"SELECT * FROM nama_unit");                                        
-                                        while ($data = mysqli_fetch_array($query)) {
-                                            echo "<option value =".$data['kd_unit'].">".$data['nama']."</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>                            
                             </div>
-                            <div class="row clearfix">
-                                <div class="col-sm-6">
-                                    <label for = "tujuan">TUJUAN</label>
-                                    <div class="form-group form-float">                                    
-                                        <div class="form-line">
-                                            <input type="text" class="form-control" id = "tujuan" name ="tujuan" placeholder="Tujuan surat yang akan dikirim" required>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>  
-                            <div class="row clearfix">
-                                <div class="col-sm-12">
-                                    <label for = "tujuan">PERIHAL</label>
-                                    <div class="form-group form-float">
-                                        <div class="form-line">
-                                            <input type="text" class="form-control" id = "hal" name = "hal" placeholder="Perihal Surat" required>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class ="button-demo js-modal-buttons">
-                            <button type="button" id ="simpan" data-color="green"  class="btn bg-green btn-success waves ">
-                                 <i class="material-icons">chat</i>
-                                <span>SUBMIT</span>
-                            </button>  
-                            </div>
-                          </div>
-                       </form>                         
+                        </form>
                     </div>
                 </div>
-            </div>            
-        <!-- #END# Select -->
-        <!-- Exportable Table -->
-            <div class="row clearfix">
+            </div>
+            <!-- #END# Horizontal Layout -->
+            <!-- Exportable Table -->
+            <div class="row clearfix" id="tabelupdate">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
                             <h2>
-                                TABEL REGISTER SURAT KELUAR
+                                Task To Do List - <?php echo $_SESSION['nama'];?>
                             </h2>
                         </div>
                         <div class="body">
-                            <div class="table-responsive" id="tabelupdate">
-                                <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                     <thead>
                                         <tr>
-                                            <th>No Surat</th>
-                                            <th>Tanggal</th>
-                                            <th>Tujuan</th>
-                                            <th>Pengirim</th>
-                                            <th>Perihal</th>
-                                            <th>Prefix Surat</th>
-                                            <th></th>
+                                            <th>No</th>
+                                            <th>Judul</th>
+                                            <th>Deadline</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>No Surat</th>
-                                            <th>Tanggal</th>
-                                            <th>Tujuan</th>
-                                            <th>Pengirim</th>
-                                            <th>Perihal</th>
-                                            <th>Prefix Surat</th>
-                                            <th></th>
+                                            <th>No</th>
+                                            <th>Judul</th>
+                                            <th>Deadline</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <?php
-                                        $query = mysqli_query($koneksi,"SELECT * FROM surat_keluar JOIN nama_unit USING(kd_unit) ORDER BY no_surat DESC"); 
+                                        $username = $_SESSION['username'];
+                                        $query = mysqli_query($koneksi,"SELECT * FROM task JOIN users USING(username) where username = '$username' ORDER BY no_task DESC"); 
                                         while ($data = mysqli_fetch_array($query)) {
                                         ?>
                                         <tr>
-                                            <td><?php echo $data['no_surat'];?></td> 
-                                            <td><?php echo $data['tanggal'];?></td>  
-                                            <td><?php echo $data['tujuan'];?></td>  
-                                            <td><?php echo $data['nama'];?></td>  
-                                            <td><?php echo $data['hal'];?></td> 
-                                            <td><?php echo $data['output'];?></td>
-                                            <?php if($data['lampiran']){
+                                            <td><?php echo $data['no_task'];?></td> 
+                                            <td data-toggle="tooltip" data-placement="left" title="<?php echo $data['deskripsi'];?>"><?php echo $data['judul'];?></td>  
+                                            <td><?php echo $data['deadline'];?></td>
+                                            <?php if($data['status']==1){
                                             ?>
                                             <td>
-                                            <a onclick ="view(<?php echo $data['no_surat'];?>)" class="btn bg-purple btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#largeModal">
-                                                <i class="material-icons">search</i>
-                                            </a>
+                                            BELUM
                                             </td>
                                             <?php
                                             }else{ ?>
-                                            <td></td>
-                                            <?php } ?>         
+                                            <td>SUDAH</td>
+                                            <?php } ?>
+                                            <td>
+                                            <a id="sadasd" class="btn bg-red btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="left" title="Selesai">
+                                            <i class="material-icons">check</i>
+                                            </a>
+                                            <a class="btn bg-purple btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="right" title="Delete">
+                                            <i class="material-icons">delete</i>
+                                            </a>
+                                            </td>         
                                         </tr>
                                         <?php
                                         }
@@ -602,13 +589,12 @@ $_SESSION['start_time'] = time();
             <!-- #END# Exportable Table -->    
         </div>
     </section>
-
      <!-- For Material Design Colors -->
             <div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="defaultModalLabel"></h4>
+                            <h4 class="modal-title" id="defaultModalLabel">SURAT KELUAR</h4>
                         </div>
 
                         <div class="modal-body">
@@ -621,72 +607,9 @@ $_SESSION['start_time'] = time();
                     </div>
                 </div>
             </div>
-
-
-
-           <div class="modal fade" id="largeModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="largeModalLabel">Scanned Document</h4>
-                        </div>
-                        <div class="modal-body-2">                   
-                                  
-                        
-                                              
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-    <!-- Jquery Core Js -->
+        <!-- Jquery Core Js -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
-    
-    
-    <script type="text/javascript">
-
-        $(document).ready(function(){
-            $("#simpan").click(function(){
-            var data = $('#form_input').serialize();
-            $.ajax({
-            type: 'POST',
-            url: "../../php/proses.php",
-            data: data,
-            success: function() {
-
-            $('#tabelupdate').load("../../php/tabelupdate.php"); 
-            $('.modal-body').load("../../php/shownomor.php");
-            document.getElementById("tanggal").value = "";
-            document.getElementById("unit").value = "";
-            document.getElementById("tujuan").value = "";
-            document.getElementById("hal").value = "";
-
-            }
-        });
-        });
-           
-        });
-
-        function view(no){
-            $.ajax({
-            type: 'POST',
-            url: "../../php/showsurat.php",
-            data: 'no='+no,
-            success: function() {
-                console.log(no);
-                $('.modal-body-2').load("../../php/show.php");
-            }
-            });
-
-        };
-
-
-    </script>
-    
-    
+    <script src="../../js/pages/tables/jquery-datatable.js"></script>
 
     <!-- Bootstrap Core Js -->
     <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
@@ -726,13 +649,6 @@ $_SESSION['start_time'] = time();
     <script src="../../plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
     <script src="../../plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
     <script src="../../plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
-    <script src="../../plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
-    <script src="../../plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
-    <script src="../../plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
-    <script src="../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
-    <script src="../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
-
-
 
     <!-- Custom Js -->
     <script src="../../js/admin.js"></script>
@@ -740,31 +656,11 @@ $_SESSION['start_time'] = time();
     <script src="../../js/pages/ui/modals.js"></script>
     <script src="../../js/pages/forms/form-validation.js"></script>
     <script src="../../js/pages/ui/dialogs.js"></script>
-    <script>
-
- $(function () {
-            $('.js-basic-example').DataTable({
-                responsive: true
-            });
-
-            //Exportable table
-            $('.js-exportable').DataTable({
-                "order": [[ 0, "desc" ]],
-                dom: 'Bfrtip',
-                responsive: true,
-                buttons: [
-                    'copy', 'excel',  'pdf', 'print'
-                ]
-
-            });
-        });
-    </script>
-    
+    <script src="../../php/task/proses.js"></script>
+    <script src="../../js/pages/ui/tooltips-popovers.js"></script>
 
     <!-- Demo Js -->
     <script src="../../js/demo.js"></script>
-
-    
 </body>
 
 </html>

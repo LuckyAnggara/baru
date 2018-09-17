@@ -214,80 +214,51 @@ $_SESSION['start_time'] = time();
                         </ul>
                     </li> -->
                     <!-- #END# Notifications -->
+
+                    <!-- php TASK -->
+                    <?php
+                    $username = $_SESSION['username'];
+                    $query_task = mysqli_query($koneksi,"SELECT count(no_task) FROM task WHERE username ='$username' "); 
+                    $query_task2 = mysqli_query($koneksi,"SELECT * FROM task WHERE username ='$username' LIMIT 5"); 
+                    $data_task = mysqli_fetch_array($query_task); 
+
+                    ?>
                     <!-- Tasks -->
                     <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
                             <i class="material-icons">flag</i>
-                            <span class="label-count">9</span>
+                            <span class="label-count"><?php echo $data_task[0];?></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">TASKS</li>
+                            <li class="header">TASKS TO DO</li>
                             <li class="body">
                                 <ul class="menu tasks">
+                                    <?php while ($data_task = mysqli_fetch_array($query_task2)) { 
+                                        ?>      
                                     <li>
                                         <a href="javascript:void(0);">
                                             <h4>
-                                                Footer display issue
-                                                <small>32%</small>
+                                                <?php echo $data_task['judul']; ?>
+                                                <small>0%</small>
                                             </h4>
                                             <div class="progress">
-                                                <div class="progress-bar bg-pink" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 32%">
+                                                <?php if($data_task['status']==0){
+                                                    $value = "width : 50%";
+                                                    $value_now = 50;
+                                                }else{
+                                                    $value = "width :100%";
+                                                    $value_now = 100;
+                                                } ?>
+                                                <div class="progress-bar bg-red" role="progressbar" aria-valuenow="<?php echo $value_now; ?>" aria-valuemin="50" aria-valuemax="100" style="<?php echo $value;?>">
                                                 </div>
                                             </div>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <h4>
-                                                Make new buttons
-                                                <small>45%</small>
-                                            </h4>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-cyan" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <h4>
-                                                Create new dashboard
-                                                <small>54%</small>
-                                            </h4>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-teal" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 54%">
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <h4>
-                                                Solve transition issue
-                                                <small>65%</small>
-                                            </h4>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 65%">
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <h4>
-                                                Answer GitHub questions
-                                                <small>92%</small>
-                                            </h4>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 92%">
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
+                                    <?php }?>
                                 </ul>
                             </li>
                             <li class="footer">
-                                <a href="javascript:void(0);">View All Tasks</a>
+                                <a href="pages/task">View All Tasks</a>
                             </li>
                         </ul>
                     </li>
@@ -318,11 +289,11 @@ $_SESSION['start_time'] = time();
                         <ul class="dropdown-menu pull-right">
                             <li><a href="pages/profile/profile.php"><i class="material-icons">person</i>Profile</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="pages/task/task.php"><i class="material-icons">assignment_turned_in</i>Add Tasks</a></li>
+                            <li><a href="pages/task/"><i class="material-icons">assignment_turned_in</i>Add Tasks</a></li>
                             <!-- <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li> -->
                             <li role="separator" class="divider"></li>
-                            <li><a href="logout.php"><i class="material-icons">input</i>Sign Out</a></li>
+                            <li><a href="php\logout.php"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -642,7 +613,7 @@ $_SESSION['start_time'] = time();
             
             <div class="row clearfix">
                 <!-- STATUS -->
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="body">
                             <form id="posting">
@@ -659,6 +630,7 @@ $_SESSION['start_time'] = time();
                                         <textarea rows="4" name="post" id="post_text" class="form-control no-resize" placeholder="Apa yang anda pikirkan? Posting Sekarang"></textarea>
 
                                         </div >
+
 
                                         <div class="jsdemo-notification-button">
                                          <button type="button" id="post" class="btn btn-primary m-t-15 waves-effect pull-right" data-placement-from="top" data-placement-align="right"
@@ -691,7 +663,6 @@ $_SESSION['start_time'] = time();
                 <?php
                 $query = mysqli_query($koneksi,"SELECT * FROM postfeed JOIN users USING(username) WHERE status_delete = '0' ORDER BY no DESC LIMIT 5");
                 ?>
-
                 <!-- Default Media -->
                 <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
                     <div class="card" id="postingfeed">
@@ -721,9 +692,7 @@ $_SESSION['start_time'] = time();
                                                     <img class="media-object" src="images/profile/<?php echo $data['username'];?>.png" width="64" height="64">
                                             </div>
                                             <div class="media-body">
-
-                                                <!-- Tombol Delete -->
-                                                
+                                                <!-- Tombol Delete -->    
                                                 <?php if($data['username']==$_SESSION['username']){
                                                     ?>
                                                     <div class ="js-sweetalert">
@@ -731,14 +700,11 @@ $_SESSION['start_time'] = time();
                                                     <i class="material-icons">delete</i>
                                                     </button>
                                                     </div>
-
                                                 <?php } ?>                                                
-
                                                 <!-- Content -->
-
-
                                                 <h1 class="media-heading"><?php echo $data['nama'];?></h1>
                                                 <?php echo $data['text'];?>
+
                                             </div>
 
                                         </div>
@@ -929,6 +895,7 @@ $_SESSION['start_time'] = time();
     </section>
 
     <!-- Jquery Core Js -->
+
     <script src="plugins/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core Js -->
@@ -963,6 +930,8 @@ $_SESSION['start_time'] = time();
 
 
     <!-- Custom Js -->
+    
+
     <script src="js/admin.js"></script>
     <script src="js/pages/cards/colored.js"></script>
     <script src="js/pages/forms/basic-form-elements.js"></script>

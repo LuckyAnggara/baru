@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 12, 2018 at 01:14 PM
+-- Generation Time: Sep 17, 2018 at 01:25 PM
 -- Server version: 10.1.33-MariaDB
 -- PHP Version: 7.2.6
 
@@ -25,6 +25,42 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `comment_feed`
+--
+
+CREATE TABLE `comment_feed` (
+  `no` int(10) NOT NULL,
+  `no_feed` int(10) NOT NULL,
+  `text` text NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `comment_feed`
+--
+
+INSERT INTO `comment_feed` (`no`, `no_feed`, `text`, `username`, `date`) VALUES
+(1, 2, '0', 'k055292', '2018-09-13 02:32:15'),
+(2, 2, '123123', 'k055292', '2018-09-13 03:32:52'),
+(3, 2, '1123123', 'k055292', '2018-09-13 03:34:10'),
+(4, 2, '123123', 'k055292', '2018-09-13 03:35:57'),
+(5, 2, '0', 'k055292', '2018-09-13 03:36:12'),
+(6, 1, 'AING GANTENG', 'k055292', '2018-09-13 03:37:35'),
+(7, 1, 'ANJING BAGONG SETAN', 'k055292', '2018-09-13 03:39:04'),
+(8, 1, 'TAI BAGONG', 'k055292', '2018-09-13 03:39:08'),
+(9, 3, 'AING GANTENG', 'k055292', '2018-09-13 04:02:49'),
+(10, 3, 'haseum', 'k055292', '2018-09-13 04:02:57'),
+(11, 3, 'koaskoakso', 'k055292', '2018-09-13 04:03:21'),
+(12, 8, 'tai ah', 'k055292', '2018-09-13 04:03:49'),
+(13, 9, 'tai anjing', 'k055292', '2018-09-13 04:06:15'),
+(14, 9, 'jancuk', 'k055292', '2018-09-13 04:06:21'),
+(15, 9, 'AING GANTENG', 'k055292', '2018-09-13 04:10:37'),
+(16, 11, 'AING GANTENG', 'k055292', '2018-09-16 20:38:50');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `nama_unit`
 --
 
@@ -38,7 +74,6 @@ CREATE TABLE `nama_unit` (
 --
 
 INSERT INTO `nama_unit` (`kd_unit`, `nama`) VALUES
-(1, 'PUT'),
 (2, 'PNC'),
 (3, 'UMC'),
 (4, 'PMC FUNDING'),
@@ -64,21 +99,28 @@ CREATE TABLE `postfeed` (
   `no` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `text` text NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `status_delete` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `postfeed`
 --
 
-INSERT INTO `postfeed` (`no`, `username`, `text`, `date`) VALUES
-(1, 'lucky', 'Myfirst POST', '2018-09-11 17:00:00'),
-(2, 'k055292', 'BALSKDLAK\r\naBLKALKB\r\nABLKALKSKBLAKSBL\r\nALSKLKLAS', '2018-09-11 17:00:00'),
-(3, 'k055292', '11', '0000-00-00 00:00:00'),
-(4, 'k055292', '1314', '0000-00-00 00:00:00'),
-(5, 'lucky', 'Risma bau', '0000-00-00 00:00:00'),
-(6, 'k055292', 'RISMA BAU PISAN', '0000-00-00 00:00:00'),
-(7, 'k055292', '123123', '0000-00-00 00:00:00');
+INSERT INTO `postfeed` (`no`, `username`, `text`, `date`, `status_delete`) VALUES
+(1, 'k055292', '123123123', '2018-09-17 02:27:24', 1),
+(2, 'k055292', '213123', '2018-09-13 08:37:01', 1),
+(3, 'k055292', 'KAPAN BISA KAYA', '2018-09-17 02:27:20', 1),
+(4, 'k055292', 'KAPAN BISA KAYA', '2018-09-13 08:56:58', 1),
+(5, 'k055292', 'HAYANG KAWIN', '2018-09-13 08:57:56', 1),
+(6, 'k055292', 'haem', '2018-09-13 09:03:41', 1),
+(7, 'k055292', 'haem', '2018-09-13 09:03:43', 1),
+(8, 'k055292', 'haem', '2018-09-13 09:05:21', 1),
+(9, 'k055292', 'hapeuk', '2018-09-17 02:27:18', 1),
+(10, 'lucky', 'ah tai anjing \r\nedan haeums half \r\nlanhaj hsjjsjsb njaiissbb bahjajabbd bajuaisbbbs \r\nhahuaiabbbs \r\nbahusjsja', '2018-09-17 02:32:10', 0),
+(11, 'k055292', 'AH CAU', '2018-09-17 02:34:26', 1),
+(12, 'k055292', '', '2018-09-17 02:23:37', 1),
+(13, 'k055292', '', '2018-09-16 21:33:30', 0);
 
 -- --------------------------------------------------------
 
@@ -138,7 +180,12 @@ INSERT INTO `surat_keluar` (`no_surat`, `tanggal`, `kd_unit`, `tujuan`, `hal`, `
 (6, '2018-09-08', 3, 'QWA', '11111111111111111123', 'GRT/3/6/2018', 'k055292', '2018-09-07 04:08:32', ''),
 (7, '2018-09-08', 3, 'QWA', '11111111111111111123', 'GRT/3/7/2018', 'k055292', '2018-09-07 04:09:02', ''),
 (8, '2018-09-08', 3, 'QWA', '11111111111111111123', 'GRT/3/8/2018', 'k055292', '2018-09-07 04:09:24', ''),
-(9, '2018-09-08', 3, 'QWA', '11111111111111111123', 'GRT/3/9/2018', 'k055292', '2018-09-07 04:09:54', '');
+(9, '2018-09-08', 3, 'QWA', '11111111111111111123', 'GRT/3/9/2018', 'k055292', '2018-09-07 04:09:54', ''),
+(10, '2018-09-13', 3, 'asdasd', '123123', 'GRT/3/10/2018', 'k055292', '2018-09-13 02:59:27', ''),
+(11, '2018-09-17', 4, 'ASDASD', '123123', 'GRT/4/11/2018', 'k055292', '2018-09-17 03:17:16', ''),
+(12, '2018-09-17', 4, 'ASDASD', '123123', 'GRT/4/12/2018', 'k055292', '2018-09-17 03:17:25', ''),
+(13, '2018-09-17', 2, 'ASDASDASDAS', '12312312312', 'GRT/2/13/2018', 'k055292', '2018-09-17 03:48:58', ''),
+(14, '2018-09-17', 9, '123123123', 'ASDASDASDASDASDASDASDASDASD', 'GRT/9/14/2018', 'k055292', '2018-09-17 03:50:07', '');
 
 -- --------------------------------------------------------
 
@@ -168,15 +215,25 @@ INSERT INTO `surat_keluar_rahasia` (`no`, `tanggal`, `kd_unit`, `tujuan`, `hal`)
 --
 
 CREATE TABLE `task` (
-  `no` int(11) NOT NULL,
+  `no` int(10) NOT NULL,
+  `no_task` int(10) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `last_added` date NOT NULL,
+  `judul` varchar(255) NOT NULL,
+  `deskripsi` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL,
   `deadline` date NOT NULL,
-  `status` int(1) NOT NULL,
-  `last_changed` date NOT NULL
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `last_update` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `task`
+--
+
+INSERT INTO `task` (`no`, `no_task`, `username`, `judul`, `deskripsi`, `status`, `deadline`, `created`, `last_update`) VALUES
+(1, 1, 'k055292', 'A', 'A', 0, '2018-09-17', '2018-09-17 05:22:48', '2018-09-17 05:22:48'),
+(2, 2, 'k055292', 'A', 'A', 0, '2018-09-17', '2018-09-17 05:23:36', '2018-09-17 05:23:36'),
+(3, 3, 'k055292', 'Mengerjakan PENYELESAIAN PERSEKOT', 'KERJAKAN PENYELESAIAN PERSEKOT ULANG TAHUN JANUARI 2018', 0, '2018-09-20', '2018-09-17 06:09:30', '2018-09-17 06:09:30');
 
 -- --------------------------------------------------------
 
@@ -198,12 +255,20 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`username`, `password`, `nama`, `email`, `status`, `last_login`) VALUES
-('k055292', '$2y$10$M2UMKLM0OkFwQ7t75MEYSO5LqJtCq5hq2H/xBF0zic.WF7JIy4udi', 'Lucky Anggara', 'anggara.lucky1992@Gmail.com', 0, '2018-09-12 11:13:50'),
-('lucky', '$2y$10$Izbv9ygA9NRTF3fubjd0b.WcQpIBg44x3qjvT1znvxR21.SF0RbZi', 'Desi Evilia Agustikarina', 'anggara.lucky1992@Gmail.com', 1, '2018-09-12 06:09:23');
+('k055292', '$2y$10$M2UMKLM0OkFwQ7t75MEYSO5LqJtCq5hq2H/xBF0zic.WF7JIy4udi', 'Lucky Anggara', 'anggara.lucky1992@Gmail.com', 0, '2018-09-17 11:23:43'),
+('lucky', '$2y$10$Izbv9ygA9NRTF3fubjd0b.WcQpIBg44x3qjvT1znvxR21.SF0RbZi', 'Desi Evilia Agustikarina', 'anggara.lucky1992@Gmail.com', 0, '2018-09-17 06:59:44');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `comment_feed`
+--
+ALTER TABLE `comment_feed`
+  ADD PRIMARY KEY (`no`),
+  ADD KEY `no_feed` (`no_feed`,`username`),
+  ADD KEY `username` (`username`);
 
 --
 -- Indexes for table `nama_unit`
@@ -245,7 +310,8 @@ ALTER TABLE `surat_keluar_rahasia`
 -- Indexes for table `task`
 --
 ALTER TABLE `task`
-  ADD PRIMARY KEY (`no`);
+  ADD PRIMARY KEY (`no`),
+  ADD KEY `username` (`username`);
 
 --
 -- Indexes for table `users`
@@ -270,14 +336,15 @@ ALTER TABLE `surat_keluar_rahasia`
   MODIFY `no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `task`
---
-ALTER TABLE `task`
-  MODIFY `no` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `comment_feed`
+--
+ALTER TABLE `comment_feed`
+  ADD CONSTRAINT `comment_feed_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`),
+  ADD CONSTRAINT `comment_feed_ibfk_2` FOREIGN KEY (`no_feed`) REFERENCES `postfeed` (`no`);
 
 --
 -- Constraints for table `postfeed`
@@ -297,6 +364,12 @@ ALTER TABLE `surat_keluar`
 --
 ALTER TABLE `surat_keluar_rahasia`
   ADD CONSTRAINT `surat_keluar_rahasia_ibfk_1` FOREIGN KEY (`kd_unit`) REFERENCES `nama_unit` (`kd_unit`);
+
+--
+-- Constraints for table `task`
+--
+ALTER TABLE `task`
+  ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

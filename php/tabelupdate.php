@@ -1,7 +1,7 @@
 <?php
 include 'function.php';
 ?>
-<div class="table-responsive" id="tabelupdate">
+                        <div class="table-responsive" id="tabelupdate">
                                 <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                                     <thead>
                                         <tr>
@@ -11,6 +11,7 @@ include 'function.php';
                                             <th>Pengirim</th>
                                             <th>Perihal</th>
                                             <th>Prefix Surat</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -21,11 +22,12 @@ include 'function.php';
                                             <th>Pengirim</th>
                                             <th>Perihal</th>
                                             <th>Prefix Surat</th>
+                                            <th></th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <?php
-                                        $query = mysqli_query($koneksi,"SELECT * FROM surat_keluar JOIN nama_unit USING(kd_unit)"); 
+                                        $query = mysqli_query($koneksi,"SELECT * FROM surat_keluar JOIN nama_unit USING(kd_unit) ORDER BY no_surat ASC"); 
                                         while ($data = mysqli_fetch_array($query)) {
                                         ?>
                                         <tr>
@@ -34,32 +36,13 @@ include 'function.php';
                                             <td><?php echo $data['tujuan'];?></td>  
                                             <td><?php echo $data['nama'];?></td>  
                                             <td><?php echo $data['hal'];?></td> 
-                                            <td><?php echo $data['output'];?></td> 
-                                        <?php
-
-                                            if($data['lampiran']){
-                                            ?>
-
+                                            <td><?php echo $data['output'];?></td>
                                             <td>
-                                                <a name="<?php echo $data['no_surat'];?>" data-toggle="modal" data-target="#largeModal" name="show">
-                                                <i class="material-icons">remove_red_eye</i>
-                                                </a>
-                                                <a href="#" data-toggle="modal" data-target="#largeModal">
-                                                <i class="material-icons">file_upload</i>
-                                                </a>
+                                            <a onclick ="view(<?php echo $data['no_surat'];?>)" class="btn bg-purple waves-effect" data-toggle="modal" data-target="#largeModal">
+                                                <i class="material-icons">search</i>
+                                            </a>
                                             </td>
 
-                                            <?php
-                                            }else{
-                                            ?>
-                                            <td><a href="../../surat_keluar.php?id=<?php echo $data['no_surat'];?>" data-toggle="modal" data-target="#largeModal" name="show">
-                                                <i class="material-icons">remove_red_eye</i>
-                                                </a>
-                                                <i class="material-icons">file_upload</i>
-                                            </td>
-                                            <?php
-                                            }
-                                            ?>
 
                                         </tr>
                                         <?php
@@ -67,7 +50,8 @@ include 'function.php';
                                         ?>
                                     </tbody>
                                 </table>
-</div>
+                            </div>
+                    
 
                  <!-- Jquery DataTable Plugin Js -->
 <script>
