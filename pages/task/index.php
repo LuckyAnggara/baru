@@ -2,7 +2,7 @@
 
 session_start();
 if( !isset($_SESSION['login']) ){
-header("Location: sign-in.php");
+header("Location: ../../sign-in.php");
 exit;
 }
 ?>
@@ -521,7 +521,7 @@ exit;
             <!-- Exportable Table -->
             <div class="row clearfix" id="tabelupdate">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
+                    <div class="card" id="tabelupdate">
                         <div class="header">
                             <h2>
                                 Task To Do List - <?php echo $_SESSION['nama'];?>
@@ -556,25 +556,42 @@ exit;
                                         ?>
                                         <tr>
                                             <td><?php echo $data['no_task'];?></td> 
-                                            <td data-toggle="tooltip" data-placement="left" title="<?php echo $data['deskripsi'];?>"><?php echo $data['judul'];?></td>  
+                                            <td data-toggle="tooltip" data-placement="top" title="<?php echo $data['deskripsi'];?>"><?php echo $data['judul'];?></td>  
+
                                             <td><?php echo $data['deadline'];?></td>
-                                            <?php if($data['status']==1){
+
+                                            <?php if($data['status_task']==0){
                                             ?>
+
+                                            <td>BELUM</td>
+
                                             <td>
-                                            BELUM
+                                            <a  class="btn bg-red btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="Klik untuk Selesai">
+                                            <i class="material-icons">check</i>
+                                            </a>
+                                            <a class="btn bg-purple btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="Delete">
+                                            <i class="material-icons">delete</i>
+                                            </a>
                                             </td>
+
+
+
                                             <?php
                                             }else{ ?>
                                             <td>SUDAH</td>
-                                            <?php } ?>
                                             <td>
-                                            <a id="sadasd" class="btn bg-red btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="left" title="Selesai">
+                                            <a  class="btn bg-black btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="Task Telah Selesai">
                                             <i class="material-icons">check</i>
                                             </a>
-                                            <a class="btn bg-purple btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="right" title="Delete">
+                                            <a class="btn bg-purple btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="Delete">
                                             <i class="material-icons">delete</i>
                                             </a>
-                                            </td>         
+                                            </td>
+                                            <?php } ?>
+
+
+                                               
+
                                         </tr>
                                         <?php
                                         }

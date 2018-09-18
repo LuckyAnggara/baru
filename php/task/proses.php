@@ -16,7 +16,7 @@
     $no = $jmlhdata+1; // no
     $jmlhdata = $data_no_task[0];
     $no_task = $jmlhdata+1; // no_task
-    $status = 0;
+    $status = false;
 
     $datedeadline = $_POST['tanggal']; // pengambilan tanggal deadline
     $deadline = date("Y-m-d", strtotime($datedeadline)); // pengolah tanggal deadline

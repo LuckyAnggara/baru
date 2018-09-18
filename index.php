@@ -92,8 +92,16 @@ $_SESSION['start_time'] = time();
     <!-- Overlay For Sidebars -->
     <div class="overlay"></div>
     <!-- #END# Overlay For Sidebars -->
+    <!-- php TASK -->
+    <?php
+    $username = $_SESSION['username'];
+    $query_task = mysqli_query($koneksi,"SELECT count(no_task) FROM task WHERE username ='$username' and status_task = 0"); 
+    $query_task2 = mysqli_query($koneksi,"SELECT * FROM task WHERE username ='$username' and status_task = 0 LIMIT 5"); 
+    $data_task = mysqli_fetch_array($query_task); 
+    ?>         
     <!-- Top Bar -->
-    <nav class="navbar">
+
+    <nav class="navbar" id="updatetask">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
@@ -102,155 +110,35 @@ $_SESSION['start_time'] = time();
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <!-- Call Search -->
-                   <!--  <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li> -->
-                    <!-- #END# Call Search -->
                     <!-- Notifications -->
-                    <!-- <li class="dropdown">
+                    <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <i class="material-icons">notifications</i>
-                            <span class="label-count">7</span>
+                            <i class="material-icons">flag</i>
+                            <?php if($data_task[0]>5){
+                                ?>
+                            <span class="label-count">5+</span>
+                            <?php
+                            }else{
+                               ?> 
+                            <span class="label-count"><?php echo $data_task[0];?></span>
+                            <?php } ?>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">NOTIFICATIONS</li>
+                            <li class="header">THINGS TO DO</li>
                             <li class="body">
                                 <ul class="menu">
-                                    <li>
+                                    <?php while ($data_task = mysqli_fetch_array($query_task2)) { 
+                                        ?>      
+                                    <li id="task" onclick="selesai(<?php echo $data_task['no_task'];?>)" data-toggle="tooltip" data-placement="left" title="Klik untuk Selesai" data-id="<?php echo $data_task['no_task']; ?>">
                                         <a href="javascript:void(0);">
                                             <div class="icon-circle bg-light-green">
                                                 <i class="material-icons">person_add</i>
                                             </div>
                                             <div class="menu-info">
-                                                <h4>12 new members joined</h4>
+                                                <p><?php echo $data_task['judul']; ?> </p>
                                                 <p>
-                                                    <i class="material-icons">access_time</i> 14 mins ago
+                                                    <i class="material-icons">access_time</i> <?php echo $data_task['deadline']; ?>
                                                 </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-cyan">
-                                                <i class="material-icons">add_shopping_cart</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4>4 sales made</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 22 mins ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-red">
-                                                <i class="material-icons">delete_forever</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4><b>Nancy Doe</b> deleted account</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 3 hours ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-orange">
-                                                <i class="material-icons">mode_edit</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4><b>Nancy</b> changed name</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 2 hours ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-blue-grey">
-                                                <i class="material-icons">comment</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4><b>John</b> commented your post</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 4 hours ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-light-green">
-                                                <i class="material-icons">cached</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4><b>John</b> updated status</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> 3 hours ago
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="icon-circle bg-purple">
-                                                <i class="material-icons">settings</i>
-                                            </div>
-                                            <div class="menu-info">
-                                                <h4>Settings updated</h4>
-                                                <p>
-                                                    <i class="material-icons">access_time</i> Yesterday
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <a href="javascript:void(0);">View All Notifications</a>
-                            </li>
-                        </ul>
-                    </li> -->
-                    <!-- #END# Notifications -->
-
-                    <!-- php TASK -->
-                    <?php
-                    $username = $_SESSION['username'];
-                    $query_task = mysqli_query($koneksi,"SELECT count(no_task) FROM task WHERE username ='$username' "); 
-                    $query_task2 = mysqli_query($koneksi,"SELECT * FROM task WHERE username ='$username' LIMIT 5"); 
-                    $data_task = mysqli_fetch_array($query_task); 
-
-                    ?>
-                    <!-- Tasks -->
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <i class="material-icons">flag</i>
-                            <span class="label-count"><?php echo $data_task[0];?></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">TASKS TO DO</li>
-                            <li class="body">
-                                <ul class="menu tasks">
-                                    <?php while ($data_task = mysqli_fetch_array($query_task2)) { 
-                                        ?>      
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <h4>
-                                                <?php echo $data_task['judul']; ?>
-                                                <small>0%</small>
-                                            </h4>
-                                            <div class="progress">
-                                                <?php if($data_task['status']==0){
-                                                    $value = "width : 50%";
-                                                    $value_now = 50;
-                                                }else{
-                                                    $value = "width :100%";
-                                                    $value_now = 100;
-                                                } ?>
-                                                <div class="progress-bar bg-red" role="progressbar" aria-valuenow="<?php echo $value_now; ?>" aria-valuemin="50" aria-valuemax="100" style="<?php echo $value;?>">
-                                                </div>
                                             </div>
                                         </a>
                                     </li>
@@ -258,11 +146,13 @@ $_SESSION['start_time'] = time();
                                 </ul>
                             </li>
                             <li class="footer">
-                                <a href="pages/task">View All Tasks</a>
+                                <a href="pages/task" data-toggle="tooltip" data-placement="bottom" title="Klik untuk melihat semua Tugas">View All</a>
                             </li>
                         </ul>
                     </li>
-                    <!-- #END# Tasks -->
+                    <!-- #END# Notifications -->
+                    
+
                     <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
                 </ul>
             </div>
@@ -720,13 +610,50 @@ $_SESSION['start_time'] = time();
                                                         <div class="font-10"><?php echo $data_comment['text'];?></div>
                                                     </div>
                                                 </br>
-                                                    <?php } ?>
+                                                    <?php } 
+                                                    $count = "comment".$nofeed;
+                                                    echo $count;
+                                                    ?>
                                                     <div class="form-line">
-                                                    <form id ="post_comment">
-                                                    <input type="text" id="comment" data-id="<?php echo $nofeed; ?>" class="form-control" placeholder="Isi Komentarmu">
+                                                    <form name="post_comment" id="post_comment">
+                                                    <input type="text" name="<?php echo $count; ?>" id="<?php echo $count; ?>" data-id="<?php echo $nofeed; ?>" class="form-control" placeholder="Isi Komentarmu">
                                                     </form>
                                                     </div>  
                                                 </div>
+
+                                                <script type="text/javascript">
+                                                        var nofeed= <?php echo json_encode($count); ?>;
+                                                        var comment = "#"+nofeed;
+                                                        
+                                                        document.getElementById(nofeed).addEventListener('keydown', (event) => {
+
+                                                        if (event.key == "Enter") {
+                                                            event.preventDefault();
+                                                            if(document.getElementById(nofeed).value ===""){
+                                                                                                                        
+                                                            }else{
+
+                                                            var data = document.getElementById(nofeed).value;
+                                                            var id = $(comment).data('id');
+                                                                                                                        
+                                                            $.ajax({
+                                                            type: 'POST',
+                                                            url: "php/posting/prosescomment.php",
+                                                            data: {id:id, data:data},
+                                                            success: function() {
+                                                            console.log(nofeed);  
+                                                            $('#postingfeed').load("php/posting/update.php");
+
+                                                            document.getElementById(nofeed).value = "";
+                                                            event.preventDefault();      
+                                                            }
+                                                            });
+                                                        }                
+                                                        }    
+                                                    });
+                                                </script>
+
+
                                             </div>
 
 
@@ -933,10 +860,13 @@ $_SESSION['start_time'] = time();
     
 
     <script src="js/admin.js"></script>
-    <script src="js/pages/cards/colored.js"></script>
     <script src="js/pages/forms/basic-form-elements.js"></script>
     <script src="php/posting/sweetalert.js"></script>
     <script src="php/posting/proses.js"></script>
+    <script src="php/posting/comment.js"></script>
+    <script src="php/posting/update.js"></script>
+    <script src="js/pages/ui/tooltips-popovers.js"></script>
+    <script src="php/task/done.js"></script>
 
     <!-- Demo Js -->
     <script src="js/demo.js"></script>

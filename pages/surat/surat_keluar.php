@@ -56,6 +56,9 @@ $_SESSION['start_time'] = time();
     <!-- Wait Me Css -->
     <link href="../../plugins/waitme/waitMe.css" rel="stylesheet" />
 
+    <!-- Dropzone Css -->
+    <link href="../../plugins/dropzone/dropzone.css" rel="stylesheet">
+
     <!-- Bootstrap Select Css -->
     <link href="../../plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
@@ -571,7 +574,11 @@ $_SESSION['start_time'] = time();
                                         while ($data = mysqli_fetch_array($query)) {
                                         ?>
                                         <tr>
-                                            <td><?php echo $data['no_surat'];?></td> 
+                                            <td>
+                                                <a role="button" data-target="#defaultModal" data-toggle="modal" data-tooltip="tooltip"  data-placement="top" title="Klik untuk mengupload Hasil Scan Surat nya">
+                                                    <?php echo $data['no_surat'];?>
+                                                </a>
+                                            </td> 
                                             <td><?php echo $data['tanggal'];?></td>  
                                             <td><?php echo $data['tujuan'];?></td>  
                                             <td><?php echo $data['nama'];?></td>  
@@ -622,7 +629,7 @@ $_SESSION['start_time'] = time();
                 </div>
             </div>
 
-
+            <!-- MODAL -->
 
            <div class="modal fade" id="largeModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-lg" role="document">
@@ -631,7 +638,7 @@ $_SESSION['start_time'] = time();
                             <h4 class="modal-title" id="largeModalLabel">Scanned Document</h4>
                         </div>
                         <div class="modal-body-2">                   
-                                  
+                                 
                         
                                               
                         </div>
@@ -642,12 +649,52 @@ $_SESSION['start_time'] = time();
                 </div>
             </div>
 
+            <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="largeModalLabel">Upload Dokumen</h4>
+                        </div>
+                        <div class="modal-body-2"> 
+                                <!-- File Upload | Drag & Drop OR With Click & Choose -->
+                                    <div class="row clearfix">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="card">
+                                                <div class="header">
+                                                    <h2>
+                                                        FILE UPLOAD - DRAG & DROP OR WITH CLICK & CHOOSE
+                                                        <small>Pilih File Hasil Scan Surat agar di Arasipkan Di Database Server (*.PDF, *.JPEG)</small>
+                                                    </h2>
+                                                </div>
+                                                <div class="body">
+                                                    <form action="upload.php" class="dropzone" id="my-awesome-dropzone">
+                                                        <div class="dz-message">
+                                                            <div class="drag-icon-cph">
+                                                                <i class="material-icons">backup</i>
+                                                            </div>
+                                                            <h3>Drop files here or click to upload.</h3>
+                                                            <em>Tipe File yang dapat di UPLOAD <strong>(*.PDF, *.JPEG)</strong></em>
+                                                        </div>
+                                                        <div class="fallback" id="upload">
+                                                            <input name="file" type="file" />
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->                                       
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
     <!-- Jquery Core Js -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
-    
-    
     <script type="text/javascript">
-
         $(document).ready(function(){
             $("#simpan").click(function(){
             var data = $('#form_input').serialize();
@@ -656,20 +703,16 @@ $_SESSION['start_time'] = time();
             url: "../../php/proses.php",
             data: data,
             success: function() {
-
             $('#tabelupdate').load("../../php/tabelupdate.php"); 
             $('.modal-body').load("../../php/shownomor.php");
             document.getElementById("tanggal").value = "";
             document.getElementById("unit").value = "";
             document.getElementById("tujuan").value = "";
             document.getElementById("hal").value = "";
-
             }
         });
+        });   
         });
-           
-        });
-
         function view(no){
             $.ajax({
             type: 'POST',
@@ -680,13 +723,8 @@ $_SESSION['start_time'] = time();
                 $('.modal-body-2').load("../../php/show.php");
             }
             });
-
         };
-
-
     </script>
-    
-    
 
     <!-- Bootstrap Core Js -->
     <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
@@ -702,6 +740,9 @@ $_SESSION['start_time'] = time();
 
     <!-- Autosize Plugin Js -->
     <script src="../../plugins/autosize/autosize.js"></script>
+
+    <!-- Dropzone Plugin Js -->
+    <script src="../../plugins/dropzone/dropzone.js"></script>
 
     <!-- Jquery Validation Plugin Css -->
     <script src="../../plugins/jquery-validation/jquery.validate.js"></script>
@@ -731,9 +772,6 @@ $_SESSION['start_time'] = time();
     <script src="../../plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
     <script src="../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
     <script src="../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
-
-
-
     <!-- Custom Js -->
     <script src="../../js/admin.js"></script>
     <script src="../../js/pages/forms/basic-form-elements.js"></script>
@@ -741,29 +779,57 @@ $_SESSION['start_time'] = time();
     <script src="../../js/pages/forms/form-validation.js"></script>
     <script src="../../js/pages/ui/dialogs.js"></script>
     <script>
+     $(function () {
+                $('.js-basic-example').DataTable({
+                    responsive: true
+                });
 
- $(function () {
-            $('.js-basic-example').DataTable({
-                responsive: true
+                //Exportable table
+                $('.js-exportable').DataTable({
+                    "order": [[ 0, "desc" ]],
+                    dom: 'Bfrtip',
+                    responsive: true,
+                    buttons: [
+                        'copy', 'excel',  'pdf', 'print'
+                    ]
+
+                });
             });
-
-            //Exportable table
-            $('.js-exportable').DataTable({
-                "order": [[ 0, "desc" ]],
-                dom: 'Bfrtip',
-                responsive: true,
-                buttons: [
-                    'copy', 'excel',  'pdf', 'print'
-                ]
-
-            });
-        });
-    </script>
-    
-
+    </script>       
     <!-- Demo Js -->
-    <script src="../../js/demo.js"></script>
+        <script src="../../js/demo.js"></script>
+        <script>
+            $(function () {
+            //Tooltip
+            $('[data-tooltip="tooltip"]').tooltip({
+                container: 'body'
+            });
 
+            //Popover
+            $('[data-tooltip="popover"]').popover();
+        })
+    </script>
+    <script>
+            Dropzone.options.myAwesomeDropzone = {
+
+              init: function() {
+                this.on("addedfile", function(file) { alert("Added file."); });
+              }
+
+              paramName: "file", // The name that will be used to transfer the file
+              maxFilesize: 5, // MB
+              accept: function(file, done) {
+                if (file.name == "justinbieber.jpg") {
+                  done("Naha, you don't.");
+                }
+                else { done(); }
+              }
+            };
+            var Dropzone = require("dropzone");
+
+            $("div#my-awesome-dropzone").dropzone({ url: "proses.php" });
+
+    </script>
     
 </body>
 
