@@ -1,8 +1,14 @@
 <?php
     session_start();
-    require '../function.php';
+    require '../config.php';
+
+    if($_SESSION['limit'] == 5){
+        $_SESSION['limit'] = $_SESSION['limit'] + 5;
+    }else{
+        $_SESSION['limit'] = $_SESSION['limit'] + 5;
+    }
     $limit = $_SESSION['limit'];
-    $query = mysqli_query($koneksi,"SELECT * FROM postfeed JOIN users USING(username) WHERE status_delete = '0' ORDER BY no DESC LIMIT 5");
+    $query = mysqli_query($koneksi,"SELECT * FROM postfeed JOIN users USING(username) WHERE status_delete = '0' ORDER BY no DESC LIMIT $limit")
     ?>
 <!-- Default Media -->
 
@@ -84,7 +90,7 @@
                             </a>
                         </div>
                     </div>
- 
+
                 <!-- #END# Default Media -->
 
 <!-- SweetAlert Plugin Js -->

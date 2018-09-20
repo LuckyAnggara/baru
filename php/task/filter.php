@@ -3,10 +3,10 @@ session_start();
 require '../../php/function.php';
 ?>
 
-    <div class="card"id="tabelupdate"> 
+    <div class="card" id="tabelupdate"> 
                         <div class="header">
                             <div class="switch pull-right">
-                                    <label>Semua<input type="checkbox" id="filter"><span class="lever"></span>Belum Selesai</label>
+                                    <label>Semua<input type="checkbox" id="nofilter" checked><span class="lever"></span>Belum Selesai</label>
                             </div>
                             <h2>
                                 Task To Do List - <?php echo $_SESSION['nama'];?>
@@ -37,7 +37,7 @@ require '../../php/function.php';
                                         <?php
                                         $username = $_SESSION['username'];
                                         $no = 1;
-                                        $query = mysqli_query($koneksi,"SELECT * FROM task JOIN users USING(username) where username = '$username' ORDER BY no_task DESC"); 
+                                        $query = mysqli_query($koneksi,"SELECT * FROM task JOIN users USING(username) where username = '$username' and status_task = 0 ORDER BY no_task DESC"); 
                                         while ($data = mysqli_fetch_array($query)) {
                                         ?>
                                         <tr>
@@ -69,7 +69,7 @@ require '../../php/function.php';
                                             <a  class="btn bg-black btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="Task Telah Selesai">
                                             <i class="material-icons">check</i>
                                             </a>
-                                            <a onclick="deleteCheck(<?php echo $data['no_task'];?>)" class="btn bg-purple btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="Delete">
+                                            <a onclick="deleteCheck(<?php echo $data['no_task'];?>)"  class="btn bg-purple btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="Delete">
                                             <i class="material-icons">delete</i>
                                             </a>
                                             </td>
@@ -87,6 +87,7 @@ require '../../php/function.php';
                             </div>
                         </div>
                     </div>
-    <script src="../../js/datatabel.js"></script>
-    <script src="../../php/task/done.js"></script>
-    <script src="../../js/pages/ui/tooltips-popovers.js"></script>
+
+<script src="../../js/datatabel.js"></script>
+<script src="../../php/task/done.js"></script>
+<script src="../../js/pages/ui/tooltips-popovers.js"></script>

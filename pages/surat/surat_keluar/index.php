@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../../php/function.php';
+require '../../../php/function.php';
 if( !isset($_SESSION['login']) ){
 header("Location: sign-in.php");
 exit;
@@ -8,7 +8,7 @@ exit;
 
 
 $timeout = $timeout * 60;
-$logout_redirect_url = "../../sign-in.php";
+$logout_redirect_url = "../../../sign-in.php";
 
 if ( isset($_SESSION['start_time']) ) {
     $elapsed_time = time() - $_SESSION['start_time'];
@@ -35,50 +35,50 @@ $_SESSION['start_time'] = time();
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>Surat Keluar | BNI Garut E-Office System</title>
     <!-- Favicon-->
-    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../../favicon.ico" type="image/x-icon">
 
     <!-- Google Fonts -->
-    <link href="../../googlematerial_icon.css" rel="stylesheet">
-    <link href="../../google_font.css" rel="stylesheet">
+    <link href="../../../googlematerial_icon.css" rel="stylesheet">
+    <link href="../../../google_font.css" rel="stylesheet">
 
     <!-- Bootstrap Core Css -->
-    <link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Waves Effect Css -->
-    <link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
+    <link href="../../../plugins/node-waves/waves.css" rel="stylesheet" />
 
     <!-- Animation Css -->
-    <link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
+    <link href="../../../plugins/animate-css/animate.css" rel="stylesheet" />
 
     <!-- Bootstrap Material Datetime Picker Css -->
-    <link href="../../plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+    <link href="../../../plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
 
     <!-- Wait Me Css -->
-    <link href="../../plugins/waitme/waitMe.css" rel="stylesheet" />
+    <link href="../../../plugins/waitme/waitMe.css" rel="stylesheet" />
 
     <!-- Dropzone Css -->
-    <link href="../../plugins/dropzone/dropzone.css" rel="stylesheet">
+    <link href="../../../plugins/filepond/filepond.css"" rel="stylesheet">
 
     <!-- Bootstrap Select Css -->
-    <link href="../../plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+    <link href="../../../plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
 
     <!-- Sweetalert Css -->
-    <link href="../../plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+    <link href="../../../plugins/sweetalert/sweetalert.css" rel="stylesheet" />
     <!-- JQuery DataTable Css -->
-    <link href="../../plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="../../../plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
 
     <!-- Custom Css -->
-    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../../css/style.css" rel="stylesheet">
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-    <link href="../../css/themes/all-themes.css" rel="stylesheet" />
+    <link href="../../../css/themes/all-themes.css" rel="stylesheet" />
     <!-- Memasukan config untuk database PHP -->
 
     
 
 
     <?php 
-    include '../../php/config.php';
+    include '../../../php/config.php';
 
     ?>
 
@@ -111,7 +111,7 @@ $_SESSION['start_time'] = time();
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="../../index.php">BNI Garut E-Office System</a>
+                <a class="navbar-brand" href="../../../index.php">BNI Garut E-Office System</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -143,17 +143,25 @@ $_SESSION['start_time'] = time();
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="../../images/user.jpg" width="48" height="48" alt="User" />
+                    <a href="../../../pages/profile/"><img src="../../../source/profile/<?php echo $_SESSION['username'];?>.png" width="48" height="48" alt="User" /></a>
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Lucky Anggara</div>
-                    <div class="email">K055292</div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <?php echo $_SESSION['nama'];?>
+                    </div>
+                    <div class="email">
+                    <?php echo $_SESSION['username'];?>
+                    </div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
+                            <li><a href="../../../pages/profile/"><i class="material-icons">person</i>Profile</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="javascript:void(0);"><i class="material-icons">input</i>Sign Out</a></li>
+                            <li><a href="../../../pages/task/"><i class="material-icons">assignment_turned_in</i>Add Tasks</a></li>
+                            <!-- <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
+                            <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li> -->
+                            <li role="separator" class="divider"></li>
+                            <li><a href="../../../php\logout.php"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -186,7 +194,7 @@ $_SESSION['start_time'] = time();
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="../../pages/surat/surat_keluar_r.php">
+                                        <a href="../../../pages/surat/surat_keluar_r.php">
                                         Surat Keluar Rahasia
                                         </a>
                                     </li>
@@ -542,6 +550,8 @@ $_SESSION['start_time'] = time();
                             <h2>
                                 TABEL REGISTER SURAT KELUAR
                             </h2>
+                                    
+
                         </div>
                         <div class="body">
                             <div class="table-responsive" id="tabelupdate">
@@ -555,6 +565,7 @@ $_SESSION['start_time'] = time();
                                             <th>Perihal</th>
                                             <th>Prefix Surat</th>
                                             <th></th>
+
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -575,7 +586,7 @@ $_SESSION['start_time'] = time();
                                         ?>
                                         <tr>
                                             <td>
-                                                <a role="button" data-target="#defaultModal" data-toggle="modal" data-tooltip="tooltip"  data-placement="top" title="Klik untuk mengupload Hasil Scan Surat nya">
+                                                <a onclick="upload(<?php echo $data['no_surat'];?>);" role="button" data-target="#defaultModal" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Klik untuk mengupload Hasil Scan Surat nya">
                                                     <?php echo $data['no_surat'];?>
                                                 </a>
                                             </td> 
@@ -584,12 +595,16 @@ $_SESSION['start_time'] = time();
                                             <td><?php echo $data['nama'];?></td>  
                                             <td><?php echo $data['hal'];?></td> 
                                             <td><?php echo $data['output'];?></td>
-                                            <?php if($data['lampiran']){
+                                            <?php $folder ="../../../uploads/surat_keluar/";
+                                             if($data['lampiran']){
                                             ?>
                                             <td>
-                                            <a onclick ="view(<?php echo $data['no_surat'];?>)" class="btn bg-purple btn-circle waves-effect waves-circle waves-float" data-toggle="modal" data-target="#largeModal">
-                                                <i class="material-icons">search</i>
+                                            <a href="<?php echo $folder.$data['lampiran'];?>" class="btn bg-purple btn-circle waves-effect waves-circle waves-float" download="<?php echo $data['output'].'-'.$data['hal'];?>" data-tooltip="tooltip" data-placement="top" title="Klik untuk mendownload Hasil Scan Surat nya">
+                                                <i class="material-icons">file_download</i>
                                             </a>
+                                         <!--    <a onclick ="view(<?php// echo $data['no_surat'];?>)" class="btn bg-purple btn-circle waves-effect waves-circle waves-float">
+                                                <i class="material-icons">file_download</i>
+                                            </a> -->
                                             </td>
                                             <?php
                                             }else{ ?>
@@ -650,61 +665,26 @@ $_SESSION['start_time'] = time();
             </div>
 
             <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="largeModalLabel">Upload Dokumen</h4>
-                        </div>
-                        <div class="modal-body-2"> 
-                                <!-- File Upload | Drag & Drop OR With Click & Choose -->
-                                    <div class="row clearfix">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="card">
-                                                <div class="header">
-                                                    <h2>
-                                                        FILE UPLOAD - DRAG & DROP OR WITH CLICK & CHOOSE
-                                                        <small>Pilih File Hasil Scan Surat agar di Arasipkan Di Database Server (*.PDF, *.JPEG)</small>
-                                                    </h2>
-                                                </div>
-                                                <div class="body">
-                                                    <form action="upload.php" class="dropzone" id="my-awesome-dropzone">
-                                                        <div class="dz-message">
-                                                            <div class="drag-icon-cph">
-                                                                <i class="material-icons">backup</i>
-                                                            </div>
-                                                            <h3>Drop files here or click to upload.</h3>
-                                                            <em>Tipe File yang dapat di UPLOAD <strong>(*.PDF, *.JPEG)</strong></em>
-                                                        </div>
-                                                        <div class="fallback" id="upload">
-                                                            <input name="file" type="file" />
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <!-- #END# File Upload | Drag & Drop OR With Click & Choose -->                                       
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        </div>
+                <div class="modal-dialog modal-sm" role="document">
+                    <div class="modal-content" id="upload_form">
+                      
                     </div>
                 </div>
             </div>
 
     <!-- Jquery Core Js -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="../../../plugins/jquery/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $("#simpan").click(function(){
             var data = $('#form_input').serialize();
             $.ajax({
             type: 'POST',
-            url: "../../php/proses.php",
+            url: "../../../php/surat_keluar/proses.php",
             data: data,
             success: function() {
-            $('#tabelupdate').load("../../php/tabelupdate.php"); 
-            $('.modal-body').load("../../php/shownomor.php");
+            $('#tabelupdate').load("../../../php/surat_keluar/update.php"); 
+            $('.modal-body').load("../../../php/surat_keluar/shownomor.php");
             document.getElementById("tanggal").value = "";
             document.getElementById("unit").value = "";
             document.getElementById("tujuan").value = "";
@@ -716,68 +696,79 @@ $_SESSION['start_time'] = time();
         function view(no){
             $.ajax({
             type: 'POST',
-            url: "../../php/showsurat.php",
+            url: "../../../php/surat_keluar/fetchnomor.php",
             data: 'no='+no,
             success: function() {
                 console.log(no);
-                $('.modal-body-2').load("../../php/show.php");
+                $('.modal-body-2').load("../../../php/surat_keluar/show.php");
             }
             });
         };
+        function upload(no){
+            $.ajax({
+            type: 'POST',
+            url: "../../../php/surat_keluar/fetchnomor.php",
+            data: 'no='+no,
+            success: function(){
+                console.log(no);
+            $('#upload_form').load("../../../php/surat_keluar/upload_form.php");
+            }
+        });
+        }
     </script>
 
     <!-- Bootstrap Core Js -->
-    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+    <script src="../../../plugins/bootstrap/js/bootstrap.js"></script>
 
     <!-- Select Plugin Js -->
-    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="../../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
 
     <!-- Slimscroll Plugin Js -->
-    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <script src="../../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
     <!-- Waves Effect Plugin Js -->
-    <script src="../../plugins/node-waves/waves.js"></script>
+    <script src="../../../plugins/node-waves/waves.js"></script>
 
     <!-- Autosize Plugin Js -->
-    <script src="../../plugins/autosize/autosize.js"></script>
-
-    <!-- Dropzone Plugin Js -->
-    <script src="../../plugins/dropzone/dropzone.js"></script>
+    <script src="../../../plugins/autosize/autosize.js"></script>
 
     <!-- Jquery Validation Plugin Css -->
-    <script src="../../plugins/jquery-validation/jquery.validate.js"></script>
+    <script src="../../../plugins/jquery-validation/jquery.validate.js"></script>
 
     <!-- JQuery Steps Plugin Js -->
-    <script src="../../plugins/jquery-steps/jquery.steps.js"></script>
+    <script src="../../../plugins/jquery-steps/jquery.steps.js"></script>
 
     <!-- Bootstrap Notify Plugin Js -->
-    <script src="../../plugins/bootstrap-notify/bootstrap-notify.js"></script>
+    <script src="../../../plugins/bootstrap-notify/bootstrap-notify.js"></script>
 
     <!-- SweetAlert Plugin Js -->
-    <script src="../../plugins/sweetalert/sweetalert.min.js"></script>
+    <script src="../../../plugins/sweetalert/sweetalert.min.js"></script>
+
+    <script src="../../../plugins/filepond/filepond.js"></script>
 
     <!-- Moment Plugin Js -->
-    <script src="../../plugins/momentjs/moment.js"></script>
+    <script src="../../../plugins/momentjs/moment.js"></script>
 
     <!-- Bootstrap Material Datetime Picker Plugin Js -->
-    <script src="../../plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+    <script src="../../../plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 
     <!-- Jquery DataTable Plugin Js -->
-    <script src="../../plugins/jquery-datatable/jquery.dataTables.js"></script>
-    <script src="../../plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
-    <script src="../../plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
-    <script src="../../plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
-    <script src="../../plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
-    <script src="../../plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
-    <script src="../../plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
-    <script src="../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
-    <script src="../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+    <script src="../../../plugins/jquery-datatable/jquery.dataTables.js"></script>
+    <script src="../../../plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="../../../plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+    <script src="../../../plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+    <script src="../../../plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+    <script src="../../../plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+    <script src="../../../plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+    <script src="../../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+    <script src="../../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
     <!-- Custom Js -->
-    <script src="../../js/admin.js"></script>
-    <script src="../../js/pages/forms/basic-form-elements.js"></script>
-    <script src="../../js/pages/ui/modals.js"></script>
-    <script src="../../js/pages/forms/form-validation.js"></script>
-    <script src="../../js/pages/ui/dialogs.js"></script>
+    <script src="../../../js/admin.js"></script>
+    <script src="../../../js/pages/forms/basic-form-elements.js"></script>
+    <script src="../../../js/pages/ui/modals.js"></script>
+    <script src="../../../js/pages/forms/form-validation.js"></script>
+    <script src="../../../js/pages/ui/dialogs.js"></script>
+
     <script>
      $(function () {
                 $('.js-basic-example').DataTable({
@@ -797,7 +788,7 @@ $_SESSION['start_time'] = time();
             });
     </script>       
     <!-- Demo Js -->
-        <script src="../../js/demo.js"></script>
+        <script src="../../../js/demo.js"></script>
         <script>
             $(function () {
             //Tooltip
@@ -809,27 +800,7 @@ $_SESSION['start_time'] = time();
             $('[data-tooltip="popover"]').popover();
         })
     </script>
-    <script>
-            Dropzone.options.myAwesomeDropzone = {
 
-              init: function() {
-                this.on("addedfile", function(file) { alert("Added file."); });
-              }
-
-              paramName: "file", // The name that will be used to transfer the file
-              maxFilesize: 5, // MB
-              accept: function(file, done) {
-                if (file.name == "justinbieber.jpg") {
-                  done("Naha, you don't.");
-                }
-                else { done(); }
-              }
-            };
-            var Dropzone = require("dropzone");
-
-            $("div#my-awesome-dropzone").dropzone({ url: "proses.php" });
-
-    </script>
     
 </body>
 

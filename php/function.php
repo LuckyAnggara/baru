@@ -1,5 +1,6 @@
 <?php 
 require 'config.php';
+$limit = 5;
 function registrasi($data){
 	global $koneksi;
 	$username = strtolower(stripcslashes($data["username"]));

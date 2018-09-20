@@ -1,5 +1,5 @@
 <?php
-include 'function.php';
+include '../function.php';
 ?>
                         <div class="table-responsive" id="tabelupdate">
                                 <table class="table table-bordered table-striped table-hover dataTable js-exportable">
@@ -12,6 +12,7 @@ include 'function.php';
                                             <th>Perihal</th>
                                             <th>Prefix Surat</th>
                                             <th></th>
+
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -27,23 +28,35 @@ include 'function.php';
                                     </tfoot>
                                     <tbody>
                                         <?php
-                                        $query = mysqli_query($koneksi,"SELECT * FROM surat_keluar JOIN nama_unit USING(kd_unit) ORDER BY no_surat ASC"); 
+                                        $query = mysqli_query($koneksi,"SELECT * FROM surat_keluar JOIN nama_unit USING(kd_unit) ORDER BY no_surat DESC"); 
                                         while ($data = mysqli_fetch_array($query)) {
                                         ?>
                                         <tr>
-                                            <td><?php echo $data['no_surat'];?></td> 
+                                            <td>
+                                                <a role="button" data-target="#defaultModal" data-toggle="modal" data-tooltip="tooltip"  data-placement="top" title="Klik untuk mengupload Hasil Scan Surat nya">
+                                                    <?php echo $data['no_surat'];?>
+                                                </a>
+                                            </td> 
                                             <td><?php echo $data['tanggal'];?></td>  
                                             <td><?php echo $data['tujuan'];?></td>  
                                             <td><?php echo $data['nama'];?></td>  
                                             <td><?php echo $data['hal'];?></td> 
                                             <td><?php echo $data['output'];?></td>
+                                            <?php $folder ="../../../uploads/surat_keluar/";
+                                             if($data['lampiran']){
+                                            ?>
                                             <td>
-                                            <a onclick ="view(<?php echo $data['no_surat'];?>)" class="btn bg-purple waves-effect" data-toggle="modal" data-target="#largeModal">
-                                                <i class="material-icons">search</i>
+                                            <a href="<?php echo $folder.$data['lampiran'];?>" class="btn bg-purple btn-circle waves-effect waves-circle waves-float" download="<?php echo $data['output'].'-'.$data['hal'];?>" data-tooltip="tooltip" data-placement="top" title="Klik untuk mendownload Hasil Scan Surat nya">
+                                                <i class="material-icons">file_download</i>
                                             </a>
+                                         <!--    <a onclick ="view(<?php// echo $data['no_surat'];?>)" class="btn bg-purple btn-circle waves-effect waves-circle waves-float">
+                                                <i class="material-icons">file_download</i>
+                                            </a> -->
                                             </td>
-
-
+                                            <?php
+                                            }else{ ?>
+                                            <td></td>
+                                            <?php } ?>         
                                         </tr>
                                         <?php
                                         }
@@ -51,6 +64,7 @@ include 'function.php';
                                     </tbody>
                                 </table>
                             </div>
+                    
                     
 
                  <!-- Jquery DataTable Plugin Js -->

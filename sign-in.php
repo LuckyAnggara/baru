@@ -24,6 +24,7 @@ if( isset($_POST['login'])){
             $_SESSION['login'] = true;
             $_SESSION['username'] = $username;
             $_SESSION['nama'] = $row['nama'];
+            $_SESSION['limit'] = 5;
             $status =  $_SESSION["login"];
             $result = mysqli_query($koneksi, "UPDATE users SET status ='$status', last_login = '$date' WHERE username = '$username'");
             header("Location: index.php");

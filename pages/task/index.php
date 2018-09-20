@@ -519,10 +519,13 @@ exit;
             </div>
             <!-- #END# Horizontal Layout -->
             <!-- Exportable Table -->
-            <div class="row clearfix" id="tabelupdate">
+            <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card" id="tabelupdate">
                         <div class="header">
+                            <div class="switch pull-right">
+                                    <label>Semua<input type="checkbox" id="filter" ><span class="lever"></span>Belum Selesai</label>
+                            </div>
                             <h2>
                                 Task To Do List - <?php echo $_SESSION['nama'];?>
                             </h2>
@@ -551,11 +554,12 @@ exit;
                                     <tbody>
                                         <?php
                                         $username = $_SESSION['username'];
+                                        $no = 1;
                                         $query = mysqli_query($koneksi,"SELECT * FROM task JOIN users USING(username) where username = '$username' ORDER BY no_task DESC"); 
                                         while ($data = mysqli_fetch_array($query)) {
                                         ?>
                                         <tr>
-                                            <td><?php echo $data['no_task'];?></td> 
+                                            <td><?php echo $no;?></td> 
                                             <td data-toggle="tooltip" data-placement="top" title="<?php echo $data['deskripsi'];?>"><?php echo $data['judul'];?></td>  
 
                                             <td><?php echo $data['deadline'];?></td>
@@ -566,10 +570,10 @@ exit;
                                             <td>BELUM</td>
 
                                             <td>
-                                            <a  class="btn bg-red btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="Klik untuk Selesai">
+                                            <a  onclick="selesaiCheck(<?php echo $data['no_task'];?>);" class="btn bg-red btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="Klik untuk Selesai">
                                             <i class="material-icons">check</i>
                                             </a>
-                                            <a class="btn bg-purple btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="Delete">
+                                            <a  onclick="deleteCheck(<?php echo $data['no_task'];?>);" class="btn bg-purple btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="Delete">
                                             <i class="material-icons">delete</i>
                                             </a>
                                             </td>
@@ -583,17 +587,17 @@ exit;
                                             <a  class="btn bg-black btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="Task Telah Selesai">
                                             <i class="material-icons">check</i>
                                             </a>
-                                            <a class="btn bg-purple btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="Delete">
+                                            <a  onclick="deleteCheck(<?php echo $data['no_task'];?>);" class="btn bg-purple btn-circle waves-effect waves-circle waves-float" data-toggle="tooltip" data-placement="top" title="Delete">
                                             <i class="material-icons">delete</i>
                                             </a>
                                             </td>
-                                            <?php } ?>
+                                            <?php  } ?>
 
 
                                                
 
                                         </tr>
-                                        <?php
+                                        <?php $no++;
                                         }
                                         ?>
                                     </tbody>
@@ -675,6 +679,7 @@ exit;
     <script src="../../js/pages/ui/dialogs.js"></script>
     <script src="../../php/task/proses.js"></script>
     <script src="../../js/pages/ui/tooltips-popovers.js"></script>
+    <script src="../../php/task/done.js"></script>
 
     <!-- Demo Js -->
     <script src="../../js/demo.js"></script>

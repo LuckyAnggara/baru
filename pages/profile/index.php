@@ -158,18 +158,18 @@ exit;
                             <span>Home</span>
                         </a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">assignment</i>
                             <span>E-Register</span>
                         </a>
                         <ul class="ml-menu">
-                            <li class="active">
+                            <li>
                                 <a href="javascript:void(0);" class="menu-toggle">
                                     Surat
                                 </a>
                                 <ul class="ml-menu">
-                                    <li class="active">
+                                    <li>
                                         <a href="#">
                                         Surat Keluar
                                         </a>

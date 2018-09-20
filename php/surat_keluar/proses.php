@@ -1,6 +1,6 @@
     <?php
     session_start();
-    	include 'config.php';
+    	include '../config.php';
 
         $date = $_POST['tanggal'];
         $tanggal = date("Y-m-d", strtotime($date));

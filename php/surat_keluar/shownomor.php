@@ -1,6 +1,6 @@
 <?php
 		
-		include 'config.php';
+		include '../config.php';
 		$query = mysqli_query($koneksi, "SELECT no_surat,output FROM surat_keluar ORDER BY no_surat DESC LIMIT 1");
         // if($data['no'] == )
         $data = mysqli_fetch_array($query);

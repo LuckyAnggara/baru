@@ -25,7 +25,6 @@ if ( isset($_SESSION['start_time']) ) {
     }
 }
 $_SESSION['start_time'] = time();
-
 ?>
 
 
@@ -95,8 +94,10 @@ $_SESSION['start_time'] = time();
     <!-- php TASK -->
     <?php
     $username = $_SESSION['username'];
+    $_SESSION['limit'] = 5;
+    $limit = $_SESSION['limit'];
     $query_task = mysqli_query($koneksi,"SELECT count(no_task) FROM task WHERE username ='$username' and status_task = 0"); 
-    $query_task2 = mysqli_query($koneksi,"SELECT * FROM task WHERE username ='$username' and status_task = 0 LIMIT 5"); 
+    $query_task2 = mysqli_query($koneksi,"SELECT * FROM task WHERE username ='$username' and status_task = 0 LIMIT '$limit'"); 
     $data_task = mysqli_fetch_array($query_task); 
     ?>         
     <!-- Top Bar -->
@@ -129,7 +130,7 @@ $_SESSION['start_time'] = time();
                                 <ul class="menu">
                                     <?php while ($data_task = mysqli_fetch_array($query_task2)) { 
                                         ?>      
-                                    <li id="task" onclick="selesai(<?php echo $data_task['no_task'];?>)" data-toggle="tooltip" data-placement="left" title="Klik untuk Selesai" data-id="<?php echo $data_task['no_task']; ?>">
+                                    <li id="task" onclick="selesai(<?php echo $data_task['no_task'];?>);" data-toggle="tooltip" data-placement="left" title="Klik untuk Selesai" data-id="<?php echo $data_task['no_task']; ?>">
                                         <a href="javascript:void(0);">
                                             <div class="icon-circle bg-light-green">
                                                 <i class="material-icons">person_add</i>
@@ -165,7 +166,7 @@ $_SESSION['start_time'] = time();
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <a href="pages/profile/profile.php"><img src="images/user.png" width="48" height="48" alt="User" /></a>
+                    <a href="pages/profile/profile.php"><img src="source/profile/<?php echo $_SESSION['username'];?>.png" width="48" height="48" alt="User" /></a>
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -177,7 +178,7 @@ $_SESSION['start_time'] = time();
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="pages/profile/profile.php"><i class="material-icons">person</i>Profile</a></li>
+                            <li><a href="pages/profile/"><i class="material-icons">person</i>Profile</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="pages/task/"><i class="material-icons">assignment_turned_in</i>Add Tasks</a></li>
                             <!-- <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
@@ -210,7 +211,7 @@ $_SESSION['start_time'] = time();
                                 </a>
                                 <ul class="ml-menu">
                                     <li>
-                                        <a href="pages/surat/surat_keluar.php">
+                                        <a href="pages/surat/surat_keluar/">
                                         Surat Keluar
                                         </a>
                                     </li>
@@ -509,8 +510,8 @@ $_SESSION['start_time'] = time();
                             <form id="posting">
                                 <div class="media">
                                     <div class="media-left">
-                                        <a href="javascript:void(0);">
-                                            <img class="media-object" src="images/user.jpg" width="96" height="96">
+                                        <a href="pages/profile/profile.php">
+                                            <img class="media-object" src="source/profile/<?php echo $_SESSION['username'];?>.png" width="96" height="96">
                                         </a>
                                     </div>
                                     <div class="media-body">
@@ -551,7 +552,7 @@ $_SESSION['start_time'] = time();
 
                 <!-- php feetching status update -->
                 <?php
-                $query = mysqli_query($koneksi,"SELECT * FROM postfeed JOIN users USING(username) WHERE status_delete = '0' ORDER BY no DESC LIMIT 5");
+                $query = mysqli_query($koneksi,"SELECT * FROM postfeed JOIN users USING(username) WHERE status_delete = '0' ORDER BY no DESC LIMIT $limit");
                 ?>
                 <!-- Default Media -->
                 <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
@@ -579,17 +580,17 @@ $_SESSION['start_time'] = time();
                                         <div class="body">
                                         <div class="media">
                                             <div class="media-left">
-                                                    <img class="media-object" src="images/profile/<?php echo $data['username'];?>.png" width="64" height="64">
+                                                    <img class="media-object" src="source/profile/<?php echo $data['username'];?>.png" width="64" height="64">
                                             </div>
                                             <div class="media-body">
                                                 <!-- Tombol Delete -->    
                                                 <?php if($data['username']==$_SESSION['username']){
                                                     ?>
-                                                    <div class ="js-sweetalert">
-                                                    <button href="javascript:void(0);" class="btn bg-red btn-circle waves-effect waves-circle waves-float pull-right" data-type="confirm" data-id="<?php echo $nofeed; ?>">
+                                                    
+                                                    <button onclick="deletePost(<?php echo $data['no'];?>);" class="btn bg-red btn-circle waves-effect waves-circle waves-float pull-right" data-toggle="tooltip" data-placement="left" title="Klik untuk Delete Post">
                                                     <i class="material-icons">delete</i>
                                                     </button>
-                                                    </div>
+                                                   
                                                 <?php } ?>                                                
                                                 <!-- Content -->
                                                 <h1 class="media-heading"><?php echo $data['nama'];?></h1>
@@ -600,8 +601,8 @@ $_SESSION['start_time'] = time();
                                         </div>
 
                                         <a class="m-r-30" data-toggle="collapse" href="#<?php echo $nofeed;?>" aria-expanded="true" aria-controls="<?php echo $nofeed;?>">
-                                            Comment <span class="badge"><?php echo $count_comment[0]; ?></span>
-                                        </a>
+                                            <span class="badge"><?php echo $count_comment[0]; ?></span> Comment 
+                                        </a >
                                             <div class="collapse" id="<?php echo $nofeed;?>">
                                                 <div class="well">
                                                     <?php while ($data_comment = mysqli_fetch_array($query_comment)) { ?>
@@ -611,49 +612,15 @@ $_SESSION['start_time'] = time();
                                                     </div>
                                                 </br>
                                                     <?php } 
-                                                    $count = "comment".$nofeed;
+                                                    $count ='comment'.$nofeed;
                                                     echo $count;
                                                     ?>
                                                     <div class="form-line">
-                                                    <form name="post_comment" id="post_comment">
-                                                    <input type="text" name="<?php echo $count; ?>" id="<?php echo $count; ?>" data-id="<?php echo $nofeed; ?>" class="form-control" placeholder="Isi Komentarmu">
+                                                    <form id="post_comment<?php echo $nofeed;?>">
+                                                    <input onclick="prosesComment(<?php echo $nofeed;?>)" type="text" name="<?php echo $nofeed;?>" id="<?php echo $nofeed;?>" class="form-control" placeholder="Isi Komentarmu">
                                                     </form>
                                                     </div>  
                                                 </div>
-
-                                                <script type="text/javascript">
-                                                        var nofeed= <?php echo json_encode($count); ?>;
-                                                        var comment = "#"+nofeed;
-                                                        
-                                                        document.getElementById(nofeed).addEventListener('keydown', (event) => {
-
-                                                        if (event.key == "Enter") {
-                                                            event.preventDefault();
-                                                            if(document.getElementById(nofeed).value ===""){
-                                                                                                                        
-                                                            }else{
-
-                                                            var data = document.getElementById(nofeed).value;
-                                                            var id = $(comment).data('id');
-                                                                                                                        
-                                                            $.ajax({
-                                                            type: 'POST',
-                                                            url: "php/posting/prosescomment.php",
-                                                            data: {id:id, data:data},
-                                                            success: function() {
-                                                            console.log(nofeed);  
-                                                            $('#postingfeed').load("php/posting/update.php");
-
-                                                            document.getElementById(nofeed).value = "";
-                                                            event.preventDefault();      
-                                                            }
-                                                            });
-                                                        }                
-                                                        }    
-                                                    });
-                                                </script>
-
-
                                             </div>
 
 
@@ -662,8 +629,8 @@ $_SESSION['start_time'] = time();
                                 <?php } ?>
                             </div>
                             <div class="footer align-center">
-                            <a href="javascript:void(0);">
-                                Load More ... 
+                            <a onclick="jump();" name="load" id="load" role="button">
+                                Load More ...
                             </a>
                         </div>
                     </div>
@@ -754,15 +721,15 @@ $_SESSION['start_time'] = time();
                             <ul class="dashboard-stat-list">
                                 <li>
                                     KUR
-                                    <span class="pull-right"><b>7%</b></span>
+                                    
                                 </li>
                                 <li>
                                     Debit Asian Games
-                                    <span class="pull-right"><b>Gratis Admin</b></span>
+                                   
                                 </li>   
                                 <li>
                                     Debit Asian Games
-                                    <span class="pull-right"><b>Gratis Admin</b></span>
+                                    
                                 </li>                              
                             </ul>
                         </div>
@@ -771,7 +738,7 @@ $_SESSION['start_time'] = time();
                 <!-- #END# Answered Tickets -->
             </div>
             <!-- Widgets -->
-            <div class="row clearfix">
+            <div class="row clearfix" id="load2">
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                     <div class="info-box bg-pink hover-expand-effect">
                         <div class="icon">
