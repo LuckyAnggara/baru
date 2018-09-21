@@ -33,7 +33,7 @@ include '../function.php';
                                         ?>
                                         <tr>
                                             <td>
-                                                <a role="button" data-target="#defaultModal" data-toggle="modal" data-tooltip="tooltip"  data-placement="top" title="Klik untuk mengupload Hasil Scan Surat nya">
+                                                <a onclick="upload(<?php echo $data['no_surat'];?>);" role="button" data-target="#defaultModal" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Klik untuk mengupload Hasil Scan Surat nya">
                                                     <?php echo $data['no_surat'];?>
                                                 </a>
                                             </td> 
@@ -86,4 +86,6 @@ include '../function.php';
 
             });
         });
-    </script>
+</script>
+
+<script src="../../../php/surat_keluar/prosesupload.js"></script>

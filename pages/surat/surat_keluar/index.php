@@ -666,7 +666,21 @@ $_SESSION['start_time'] = time();
 
             <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-sm" role="document">
-                    <div class="modal-content" id="upload_form">
+                    <div class="modal-content">
+
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="smallModalLabel">Upload Dokumen</h4>
+                        </div>
+                        <div class="modal-body"  id="upload_form">
+                                                   
+                        </div>                        
+                        <div class="modal-footer">
+                            
+                            <button onclick="closeUpload();" name="closeUpload" id="closeUpload" type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                       
+                        </div>
+                    </div>
                       
                     </div>
                 </div>
@@ -693,30 +707,10 @@ $_SESSION['start_time'] = time();
         });
         });   
         });
-        function view(no){
-            $.ajax({
-            type: 'POST',
-            url: "../../../php/surat_keluar/fetchnomor.php",
-            data: 'no='+no,
-            success: function() {
-                console.log(no);
-                $('.modal-body-2').load("../../../php/surat_keluar/show.php");
-            }
-            });
-        };
-        function upload(no){
-            $.ajax({
-            type: 'POST',
-            url: "../../../php/surat_keluar/fetchnomor.php",
-            data: 'no='+no,
-            success: function(){
-                console.log(no);
-            $('#upload_form').load("../../../php/surat_keluar/upload_form.php");
-            }
-        });
-        }
+    
     </script>
 
+    <script src="../../../php/surat_keluar/prosesupload.js"></script>
     <!-- Bootstrap Core Js -->
     <script src="../../../plugins/bootstrap/js/bootstrap.js"></script>
 
@@ -768,7 +762,6 @@ $_SESSION['start_time'] = time();
     <script src="../../../js/pages/ui/modals.js"></script>
     <script src="../../../js/pages/forms/form-validation.js"></script>
     <script src="../../../js/pages/ui/dialogs.js"></script>
-
     <script>
      $(function () {
                 $('.js-basic-example').DataTable({
