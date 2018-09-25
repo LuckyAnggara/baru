@@ -111,7 +111,7 @@ $_SESSION['start_time'] = time();
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="../../../index.php">BNI Garut E-Office System</a>
+                <a class="navbar-brand" href="../../../">BNI Garut E-Office System</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -172,7 +172,7 @@ $_SESSION['start_time'] = time();
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
                     <li>
-                        <a href="index.php">
+                        <a href="../../../">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
@@ -194,7 +194,7 @@ $_SESSION['start_time'] = time();
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="../../../pages/surat/surat_keluar_r.php">
+                                        <a href="../../../pages/surat/surat_keluar_rahasia/">
                                         Surat Keluar Rahasia
                                         </a>
                                     </li>

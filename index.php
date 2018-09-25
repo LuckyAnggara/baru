@@ -194,7 +194,7 @@ $_SESSION['start_time'] = time();
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
                     <li class="active">
-                        <a href="index.php">
+                        <a href="../2/">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
@@ -216,7 +216,7 @@ $_SESSION['start_time'] = time();
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="pages/surat/surat_keluar_r.php">
+                                        <a href="pages/surat/surat_keluar_rahasia/">
                                         Surat Keluar Rahasia
                                         </a>
                                     </li>

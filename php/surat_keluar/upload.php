@@ -13,27 +13,25 @@ if(is_array($_FILES)) {
 		$explode = explode("/",$data['output']);
 		$hal = $data['hal'];
 		$noprefix = $explode[0]."-".$explode[1]."-".$explode[2]."-".$explode[3];
-		echo "$noprefix";
-		//$namaFileBaru = $noprefix.".".$extensi;
 		$namaFileBaru = $noprefix."-".$hal.".".$extensi;
 
 		$sourcePath = $_FILES['fileUpload']['tmp_name'];
 		$targetPath = "../../uploads/surat_keluar/".$namaFileBaru;
 
-		if(($extensi=="pdf") && ($extensi=="jpg") && ($extensi=="jepg")){
-		if(is_file("../../uploads/surat_keluar/".$data['lampiran'])){
-			unlink("../../uploads/surat_keluar/".$data['lampiran']); // Hapus file foto sebelumnya yang ada di folder images
-			move_uploaded_file($sourcePath,$targetPath);
-				$sql = mysqli_query($koneksi,"UPDATE surat_keluar SET lampiran='$namaFileBaru' WHERE no_surat='$no'");
-				echo "File Lama Didelete, Ganti File Baru";
+		if(($extensi=="pdf") || ($extensi=="jpg") || ($extensi=="jpeg")){
+			if(is_file("../../uploads/surat_keluar/".$data['lampiran'])){
+				unlink("../../uploads/surat_keluar/".$data['lampiran']); // Hapus file foto sebelumnya yang ada di folder images
+				move_uploaded_file($sourcePath,$targetPath);
+					$sql = mysqli_query($koneksi,"UPDATE surat_keluar SET lampiran='$namaFileBaru' WHERE no_surat='$no'");
+					echo "File Lama Didelete, Ganti File Baru";
+			}else{
+				move_uploaded_file($sourcePath,$targetPath);
+					$sql = mysqli_query($koneksi,"UPDATE surat_keluar SET lampiran='$namaFileBaru' WHERE no_surat='$no'");
+					echo "File Baru Uploaded";
+				
+			}
 		}else{
-			move_uploaded_file($sourcePath,$targetPath);
-				$sql = mysqli_query($koneksi,"UPDATE surat_keluar SET lampiran='$namaFileBaru' WHERE no_surat='$no'");
-				echo "File Baru Uploaded";
-			
-		}
-		}else{
-		echo "FILE SALAH";
+		echo $extensi;
 		}
 	}
 }

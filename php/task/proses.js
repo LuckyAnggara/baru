@@ -9,7 +9,6 @@
             data: data,
             success: function() {
             $('#tabelupdate').load("../../php/task/update.php");
-
             }
         });
         });

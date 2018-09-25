@@ -15,7 +15,6 @@ function upload(no){
             url: "../../../php/surat_keluar/fetchnomor.php",
             data: 'no='+no,
             success: function(){
-                console.log(no);
             $('#upload_form').load("../../../php/surat_keluar/upload_form.php");
             }
         });
