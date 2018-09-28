@@ -2,13 +2,13 @@
 session_start();
 require '../../../php/function.php';
 if( !isset($_SESSION['login']) ){
-header("Location: sign-in.php");
+header("Location: ../../pages/sign-in/");
 exit;
 }
 
 
 $timeout = $timeout * 60;
-$logout_redirect_url = "../../../sign-in.php";
+$logout_redirect_url = "../../../pages/sign-in/";
 
 if ( isset($_SESSION['start_time']) ) {
     $elapsed_time = time() - $_SESSION['start_time'];
@@ -199,7 +199,7 @@ $_SESSION['start_time'] = time();
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="pages/forms/basic-form-elements.html">
+                                        <a href="../../../pages/surat/surat_masuk/">
                                         Surat Masuk
                                         </a>
                                     </li>
@@ -600,7 +600,7 @@ $_SESSION['start_time'] = time();
                                             ?>
                                             <td>
                                             <a href="<?php echo $folder.$data['lampiran'];?>" class="btn bg-purple btn-circle waves-effect waves-circle waves-float" download="<?php echo $data['output'].'-'.$data['hal'];?>" data-tooltip="tooltip" data-placement="top" title="Klik untuk mendownload Hasil Scan Surat nya">
-                                                <i class="material-icons">file_download</i>
+                                                <i class="material-icons">attachment</i>
                                             </a>
                                          <!--    <a onclick ="view(<?php// echo $data['no_surat'];?>)" class="btn bg-purple btn-circle waves-effect waves-circle waves-float">
                                                 <i class="material-icons">file_download</i>

@@ -12,7 +12,7 @@ if(is_array($_FILES)) {
 
 		$explode = explode("/",$data['output']);
 		$hal = $data['hal'];
-		$noprefix = $explode[0]."-".$explode[1]."-".$explode[2]."-".$explode[3];
+		$noprefix = $explode[0]."-".$explode[1]."-".$explode[2]."-".$explode[3]."-".$explode[4];;
 		$namaFileBaru = $noprefix."-".$hal.".".$extensi;
 
 		$sourcePath = $_FILES['fileUpload']['tmp_name'];

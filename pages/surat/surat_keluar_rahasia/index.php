@@ -199,7 +199,7 @@ $_SESSION['start_time'] = time();
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="pages/forms/basic-form-elements.html">
+                                        <a href="../../../pages/surat/surat_masuk/">
                                         Surat Masuk
                                         </a>
                                     </li>
@@ -487,7 +487,6 @@ $_SESSION['start_time'] = time();
                         </div>
                         <form method="POST" id="form_input">
                         <div class="body">
-                            
                             <div class="row clearfix">
                                 <div class="col-sm-6">
                                     <label for = "tujuan">TANGGAL</label>
@@ -599,7 +598,7 @@ $_SESSION['start_time'] = time();
                                             ?>
                                             <td>
                                             <a href="<?php echo $folder.$data['lampiran'];?>" class="btn bg-purple btn-circle waves-effect waves-circle waves-float" download="<?php echo $data['output'].'-'.$data['hal'];?>" data-tooltip="tooltip" data-placement="top" title="Klik untuk mendownload Hasil Scan Surat nya">
-                                                <i class="material-icons">file_download</i>
+                                                <i class="material-icons">attachment</i>
                                             </a>
                                          <!--    <a onclick ="view(<?php// echo $data['no_surat'];?>)" class="btn bg-purple btn-circle waves-effect waves-circle waves-float">
                                                 <i class="material-icons">file_download</i>
@@ -624,7 +623,7 @@ $_SESSION['start_time'] = time();
         </div>
     </section>
 
-     <!-- For Material Design Colors -->
+    <!-- For Material Design Colors -->
             <div class="modal fade" id="mdModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">

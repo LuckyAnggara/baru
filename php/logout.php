@@ -7,7 +7,7 @@ $result = mysqli_query($koneksi, "UPDATE users SET status ='0' WHERE username = 
 session_unset();
 $_SESSION = [];
 session_destroy();
-header("Location: ../sign-in.php");
+header("Location: ../pages/sign-in/");
 exit;
 
 
